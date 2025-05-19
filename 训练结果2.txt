@@ -1,0 +1,599 @@
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+  0%|          | 0/4 [00:00<?, ?it/s]D:\Users\zhu94\PycharmProjects\Chinese_license_plate_detection_recognition-main\train.py:301: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  sz = random.randrange(imgsz * 0.5, imgsz * 1.5 + grid_size) // grid_size * grid_size  # size
+D:\Users\zhu94\PycharmProjects\Chinese_license_plate_detection_recognition-main\train.py:308: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with amp.autocast(enabled=cuda):
+     0/119    0.906G   0.02332  0.003115 0.0001731   0.01114   0.03775         8       864: 100%|██████████| 4/4 [00:13<00:00,  3.44s/it]
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+     1/119    0.235G   0.02294  0.003877  0.001286   0.01014   0.03824         7       608: 100%|██████████| 4/4 [00:56<00:00, 14.04s/it]
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+     2/119     1.09G   0.02245  0.005243 0.0004863   0.01132    0.0395         9       608: 100%|██████████| 4/4 [00:01<00:00,  2.06it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  1.52it/s]
+                 all          20          20       0.746           1       0.996        0.75
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+     3/119    0.807G   0.02372  0.004653 0.0001336   0.01184   0.04035         6       608: 100%|██████████| 4/4 [00:03<00:00,  1.26it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.30it/s]
+                 all          20          20       0.728           1       0.996       0.668
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+     4/119    0.336G   0.02173   0.00308 0.0001189   0.01277    0.0377         7       576: 100%|██████████| 4/4 [00:06<00:00,  1.75s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  3.68it/s]
+                 all          20          20       0.718           1       0.996       0.762
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+     5/119    0.115G   0.02742  0.005322 0.0009014   0.01169   0.04533         7       352: 100%|██████████| 4/4 [00:07<00:00,  1.92s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.92it/s]
+                 all          20          20       0.707           1       0.996       0.744
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+     6/119    0.336G   0.02117  0.001822 0.0001849   0.01409   0.03727         5       768: 100%|██████████| 4/4 [00:04<00:00,  1.09s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.00it/s]
+                 all          20          20       0.744           1       0.996       0.745
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+     7/119     1.39G   0.01958  0.003947 0.0002353   0.01076   0.03452        11       352: 100%|██████████| 4/4 [00:34<00:00,  8.59s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.52it/s]
+                 all          20          20       0.714           1       0.996       0.751
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+     8/119    0.147G    0.0185  0.003096 0.0001623  0.009981   0.03173         5       416: 100%|██████████| 4/4 [00:04<00:00,  1.22s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.98it/s]
+                 all          20          20       0.717           1       0.996       0.772
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+     9/119    0.336G    0.0218  0.001887 0.0001828   0.01115   0.03502         5       896: 100%|██████████| 4/4 [00:04<00:00,  1.02s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.13it/s]
+                 all          20          20       0.716           1       0.996        0.77
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    10/119    0.206G   0.01802  0.003342 0.0001346   0.01053   0.03203         7       704: 100%|██████████| 4/4 [00:04<00:00,  1.16s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.62it/s]
+                 all          20          20       0.702           1       0.996       0.775
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    11/119     0.17G   0.01937  0.003352 0.0005474   0.01071   0.03398         7       320: 100%|██████████| 4/4 [00:02<00:00,  1.43it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.48it/s]
+                 all          20          20       0.703           1       0.996       0.754
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    12/119     8.46G   0.02066  0.002316 0.0001243    0.0105   0.03361         5       608: 100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.92it/s]
+                 all          20          20       0.705           1       0.996       0.774
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    13/119    0.218G   0.02758  0.005221 0.0004069   0.01396   0.04717         9       640: 100%|██████████| 4/4 [00:01<00:00,  2.32it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.10it/s]
+                 all          20          20       0.692           1       0.996       0.788
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    14/119    0.222G    0.0221  0.002652 0.0001126   0.01332   0.03819         6       736: 100%|██████████| 4/4 [00:03<00:00,  1.20it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.28it/s]
+                 all          20          20       0.698           1       0.996       0.782
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    15/119     1.47G    0.0281  0.003319 0.0006036   0.01396   0.04598        10       704: 100%|██████████| 4/4 [00:02<00:00,  1.91it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.35it/s]
+                 all          20          20       0.649           1       0.996       0.775
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    16/119    0.319G   0.02141  0.001929 0.0001096   0.01914   0.04259         5       800: 100%|██████████| 4/4 [00:04<00:00,  1.11s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.40it/s]
+                 all          20          20        0.71           1       0.996       0.757
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    17/119     1.29G   0.01942  0.005295 0.0001352   0.01236   0.03721        11       352: 100%|██████████| 4/4 [00:03<00:00,  1.20it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.99it/s]
+                 all          20          20       0.637           1       0.996       0.767
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    18/119    0.327G   0.02669  0.004678 0.0003606   0.01229   0.04402         6       480: 100%|██████████| 4/4 [00:01<00:00,  3.19it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.87it/s]
+                 all          20          20       0.699           1       0.996       0.759
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    19/119     6.81G   0.02037  0.002342 0.0001036   0.01085   0.03367         8       640: 100%|██████████| 4/4 [00:01<00:00,  2.14it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.75it/s]
+                 all          20          20       0.711           1       0.996       0.784
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    20/119    0.201G   0.02148  0.002084 0.0001383   0.01254   0.03624         9       672: 100%|██████████| 4/4 [00:07<00:00,  1.91s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.76it/s]
+                 all          20          20       0.708           1       0.996       0.791
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    21/119     3.83G   0.02286  0.002966  0.001143    0.0109   0.03788        10       608: 100%|██████████| 4/4 [00:00<00:00,  4.39it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.12it/s]
+                 all          20          20       0.642           1       0.996       0.782
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    22/119    0.197G   0.02194  0.002106 0.0001216   0.01096   0.03513         5       448: 100%|██████████| 4/4 [00:06<00:00,  1.74s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.97it/s]
+                 all          20          20       0.713           1       0.996       0.793
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    23/119     7.31G   0.02401  0.002479 0.0001536    0.0128   0.03945         6       640: 100%|██████████| 4/4 [00:03<00:00,  1.00it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  3.90it/s]
+                 all          20          20       0.701           1       0.996       0.767
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    24/119     7.31G    0.0235  0.004495  0.000367   0.01016   0.03852        10       704: 100%|██████████| 4/4 [00:01<00:00,  2.45it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  3.21it/s]
+                 all          20          20       0.529           1       0.982       0.731
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    25/119     7.31G   0.02647  0.003489 0.0001225   0.01248   0.04256         6       416: 100%|██████████| 4/4 [00:01<00:00,  3.20it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  4.11it/s]
+                 all          20          20       0.719           1       0.996       0.777
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    26/119    0.145G   0.01887  0.002081 0.0002144   0.01063    0.0318         5       384: 100%|██████████| 4/4 [00:08<00:00,  2.05s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.51it/s]
+                 all          20          20       0.748           1       0.996        0.78
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    27/119     7.26G   0.01933  0.001811 0.0001431  0.009934   0.03122         5       896: 100%|██████████| 4/4 [00:03<00:00,  1.03it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  4.36it/s]
+                 all          20          20       0.773           1       0.996       0.784
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    28/119     7.31G   0.02185  0.002481 8.811e-05  0.009621   0.03404         4       608: 100%|██████████| 4/4 [00:01<00:00,  2.63it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  3.97it/s]
+                 all          20          20       0.772           1       0.996       0.774
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    29/119     7.31G   0.02011    0.0021 9.614e-05  0.009283   0.03159         5       768: 100%|██████████| 4/4 [00:03<00:00,  1.14it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  3.84it/s]
+                 all          20          20       0.773           1       0.996       0.796
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    30/119     7.31G   0.02368  0.005179 0.0005016   0.01145   0.04081         8       608: 100%|██████████| 4/4 [00:00<00:00,  4.69it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  3.97it/s]
+                 all          20          20       0.588           1       0.989       0.752
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    31/119     9.37G   0.01899  0.005783  0.001641  0.008408   0.03482        11       384: 100%|██████████| 4/4 [00:04<00:00,  1.24s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  4.40it/s]
+                 all          20          20       0.543           1       0.987       0.765
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    32/119    0.203G   0.03083  0.003803 0.0001925   0.01789   0.05272         6       512: 100%|██████████| 4/4 [00:02<00:00,  1.50it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.18it/s]
+                 all          20          20       0.729           1       0.996       0.772
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    33/119     7.41G   0.02597  0.002642  0.000432   0.01353   0.04257         8       480: 100%|██████████| 4/4 [00:03<00:00,  1.24it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.39it/s]
+                 all          20          20       0.774           1       0.996       0.787
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    34/119    0.226G   0.01976  0.002777 0.0001083  0.008167   0.03081         5       544: 100%|██████████| 4/4 [00:04<00:00,  1.24s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.87it/s]
+                 all          20          20        0.77           1       0.996       0.752
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    35/119     5.18G   0.02316  0.003128 0.0001199  0.009146   0.03556         9       704: 100%|██████████| 4/4 [00:00<00:00,  4.83it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.14it/s]
+                 all          20          20       0.752           1       0.996       0.793
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    36/119     7.59G   0.01945  0.001825 8.748e-05   0.00917   0.03053         6       576: 100%|██████████| 4/4 [00:07<00:00,  1.82s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.23it/s]
+                 all          20          20       0.773           1       0.996       0.815
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    37/119     7.59G    0.0203  0.003302 0.0001119    0.0101   0.03381         6       512: 100%|██████████| 4/4 [00:02<00:00,  1.37it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.47it/s]
+                 all          20          20       0.775           1       0.996       0.792
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    38/119     9.24G   0.01989   0.00346 0.0002338   0.00915   0.03274         6       320: 100%|██████████| 4/4 [00:04<00:00,  1.06s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  4.45it/s]
+                 all          20          20       0.777           1       0.996       0.801
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    39/119     9.27G   0.01959  0.003866 0.0001027   0.01463   0.03819         5       640: 100%|██████████| 4/4 [00:04<00:00,  1.14s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.98it/s]
+                 all          20          20       0.782           1       0.996       0.806
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    40/119     9.27G   0.02289  0.002137 0.0003093   0.01377   0.03911         8       704: 100%|██████████| 4/4 [00:03<00:00,  1.29it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  4.94it/s]
+                 all          20          20        0.79           1       0.996        0.79
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    41/119    0.346G   0.02489  0.004075 0.0001137   0.01262    0.0417         6       928: 100%|██████████| 4/4 [00:02<00:00,  1.70it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.03it/s]
+                 all          20          20       0.788           1       0.996       0.819
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    42/119     5.36G   0.02105  0.003139 9.565e-05  0.009702   0.03399        11       512: 100%|██████████| 4/4 [00:00<00:00,  4.88it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.99it/s]
+                 all          20          20        0.79           1       0.996       0.814
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    43/119     8.37G   0.01687  0.001379 0.0001022   0.01082   0.02916         6       672: 100%|██████████| 4/4 [00:09<00:00,  2.46s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.37it/s]
+                 all          20          20       0.835           1       0.996       0.807
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    44/119     8.37G    0.0189   0.00293 0.0001359   0.00952   0.03149        10       512: 100%|██████████| 4/4 [00:03<00:00,  1.01it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.10it/s]
+                 all          20          20       0.835           1       0.996       0.806
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    45/119     8.37G   0.01643  0.002374 9.332e-05  0.007766   0.02667         5       672: 100%|██████████| 4/4 [00:01<00:00,  2.08it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.25it/s]
+                 all          20          20       0.818           1       0.996       0.802
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    46/119     8.37G   0.01907  0.004294 0.0001071  0.009969   0.03344         8       768: 100%|██████████| 4/4 [00:01<00:00,  2.70it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.09it/s]
+                 all          20          20       0.792           1       0.996       0.789
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    47/119    0.398G   0.01578  0.002405 0.0001095  0.009454   0.02775        10       960: 100%|██████████| 4/4 [00:08<00:00,  2.19s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.12it/s]
+                 all          20          20       0.836           1       0.996       0.768
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    48/119     4.78G   0.02249  0.002102 0.0001074   0.01085   0.03555         7       608: 100%|██████████| 4/4 [00:00<00:00,  4.33it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.83it/s]
+                 all          20          20       0.837           1       0.996       0.802
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    49/119     4.79G   0.02655  0.003872 0.0001051    0.0124   0.04292         6       640: 100%|██████████| 4/4 [00:00<00:00,  5.23it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.58it/s]
+                 all          20          20       0.836           1       0.996       0.792
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    50/119     7.45G   0.02032  0.001889 0.0001158    0.0112   0.03352         6       640: 100%|██████████| 4/4 [00:03<00:00,  1.28it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.35it/s]
+                 all          20          20       0.842           1       0.996       0.797
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    51/119     9.11G    0.0194   0.00209 0.0001399   0.01209   0.03372         8       896: 100%|██████████| 4/4 [00:07<00:00,  1.78s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.75it/s]
+                 all          20          20       0.855           1       0.996       0.819
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    52/119     9.11G   0.01748  0.003613 0.0001046   0.00935   0.03055         5       544: 100%|██████████| 4/4 [00:04<00:00,  1.07s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.53it/s]
+                 all          20          20       0.857           1       0.996       0.802
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    53/119     9.11G   0.01613  0.004573 8.635e-05  0.007353   0.02814         5       384: 100%|██████████| 4/4 [00:01<00:00,  2.68it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.55it/s]
+                 all          20          20       0.844           1       0.996       0.807
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    54/119     9.11G   0.02235  0.003795 0.0001881  0.009405   0.03574        10       384: 100%|██████████| 4/4 [00:02<00:00,  1.46it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.70it/s]
+                 all          20          20       0.606           1       0.991       0.771
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    55/119     10.1G   0.02588  0.005581 0.0001142   0.01129   0.04287         9       608: 100%|██████████| 4/4 [00:04<00:00,  1.17s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.71it/s]
+                 all          20          20        0.57           1       0.991        0.76
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    56/119     10.1G   0.02913  0.002367 9.881e-05   0.01153   0.04312         7       448: 100%|██████████| 4/4 [00:04<00:00,  1.12s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.35it/s]
+                 all          20          20        0.85           1       0.996       0.813
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    57/119     10.1G   0.02333  0.004349 0.0001276  0.008463   0.03627        11       384: 100%|██████████| 4/4 [00:02<00:00,  1.48it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.44it/s]
+                 all          20          20        0.85           1       0.996       0.807
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    58/119     10.1G   0.02111  0.003417 0.0001062  0.009789   0.03443         7       448: 100%|██████████| 4/4 [00:02<00:00,  1.52it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.18it/s]
+                 all          20          20       0.816           1       0.996        0.81
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    59/119     10.1G   0.02015  0.002605 9.354e-05   0.01059   0.03344         6       416: 100%|██████████| 4/4 [00:01<00:00,  2.63it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.13it/s]
+                 all          20          20       0.799           1       0.996       0.816
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    60/119     10.1G    0.0146  0.001804 9.043e-05  0.007273   0.02377         6       448: 100%|██████████| 4/4 [00:05<00:00,  1.47s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.14it/s]
+                 all          20          20       0.846           1       0.996        0.81
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    61/119     10.1G   0.01772  0.003661 0.0001181  0.009006   0.03051         8       352: 100%|██████████| 4/4 [00:02<00:00,  1.55it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.04it/s]
+                 all          20          20       0.846           1       0.996       0.821
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    62/119     10.1G     0.019  0.002118 9.438e-05  0.009549   0.03076        12       512: 100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.20it/s]
+                 all          20          20       0.864           1       0.996       0.807
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    63/119     10.1G   0.01792  0.002211  9.73e-05   0.00859   0.02882         5       864: 100%|██████████| 4/4 [00:02<00:00,  1.37it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.33it/s]
+                 all          20          20        0.87           1       0.996       0.813
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    64/119     10.1G   0.02198  0.003479 0.0001059   0.00985   0.03542         8       576: 100%|██████████| 4/4 [00:01<00:00,  2.66it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.26it/s]
+                 all          20          20       0.863           1       0.996       0.825
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    65/119     10.1G   0.02064  0.003195 0.0001973   0.01255   0.03658         5       864: 100%|██████████| 4/4 [00:03<00:00,  1.12it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.44it/s]
+                 all          20          20       0.866           1       0.996       0.796
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    66/119     10.1G   0.01774  0.002093 9.518e-05  0.009613   0.02955         7       864: 100%|██████████| 4/4 [00:04<00:00,  1.07s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.44it/s]
+                 all          20          20        0.87           1       0.996       0.812
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    67/119     10.1G    0.0217  0.003672 0.0002065  0.009286   0.03486         8       640: 100%|██████████| 4/4 [00:02<00:00,  1.59it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.27it/s]
+                 all          20          20        0.87           1       0.996       0.831
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    68/119     10.1G   0.01887  0.005217  9.86e-05  0.008606   0.03279         9       320: 100%|██████████| 4/4 [00:03<00:00,  1.22it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.79it/s]
+                 all          20          20        0.87           1       0.996       0.822
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    69/119     10.1G   0.01612  0.002388 9.624e-05  0.008709   0.02731         7       320: 100%|██████████| 4/4 [00:08<00:00,  2.22s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.21it/s]
+                 all          20          20        0.87           1       0.996       0.822
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    70/119     10.1G   0.01866  0.003341 0.0001035  0.009644   0.03175         7       448: 100%|██████████| 4/4 [00:03<00:00,  1.14it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.60it/s]
+                 all          20          20       0.871           1       0.996       0.826
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    71/119     10.1G   0.01816  0.002858 9.107e-05  0.008935   0.03004         4       576: 100%|██████████| 4/4 [00:03<00:00,  1.04it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.47it/s]
+                 all          20          20       0.871           1       0.996       0.814
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    72/119     10.1G   0.01851  0.002338 0.0001233   0.01174   0.03271        10       704: 100%|██████████| 4/4 [00:04<00:00,  1.11s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.06it/s]
+                 all          20          20       0.872           1       0.996       0.813
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    73/119     10.1G   0.01836  0.003065 8.637e-05  0.009557   0.03106         5       544: 100%|██████████| 4/4 [00:03<00:00,  1.11it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  4.53it/s]
+                 all          20          20        0.87           1       0.996       0.816
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    74/119    0.294G   0.01977  0.003552   8.7e-05    0.0107   0.03411         9       832: 100%|██████████| 4/4 [00:03<00:00,  1.12it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.55it/s]
+                 all          20          20       0.872           1       0.996       0.805
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    75/119     9.29G   0.02071  0.001661 0.0001576   0.01128    0.0338         8       768: 100%|██████████| 4/4 [00:05<00:00,  1.43s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.24it/s]
+                 all          20          20       0.873           1       0.996       0.797
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    76/119     9.36G   0.01822  0.002249 9.216e-05  0.008905   0.02947         8       640: 100%|██████████| 4/4 [00:05<00:00,  1.34s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.74it/s]
+                 all          20          20       0.873           1       0.996       0.823
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    77/119     9.36G   0.02225  0.001948 0.0001274   0.01109   0.03542         7       736: 100%|██████████| 4/4 [00:04<00:00,  1.08s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.13it/s]
+                 all          20          20       0.874           1       0.996       0.793
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    78/119     9.36G   0.01782  0.001505 0.0001092  0.009748   0.02918         6       960: 100%|██████████| 4/4 [00:09<00:00,  2.31s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  4.08it/s]
+                 all          20          20       0.875           1       0.996       0.808
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    79/119     9.36G   0.01728  0.004803  0.001249   0.00747    0.0308        12       352: 100%|██████████| 4/4 [00:04<00:00,  1.20s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.25it/s]
+                 all          20          20       0.875           1       0.996       0.798
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    80/119     9.36G   0.01624  0.002163     8e-05  0.008388   0.02687         5       672: 100%|██████████| 4/4 [00:06<00:00,  1.63s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.00it/s]
+                 all          20          20       0.875           1       0.996       0.821
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    81/119     9.36G   0.01912  0.003261 0.0001192  0.009188   0.03169        10       608: 100%|██████████| 4/4 [00:02<00:00,  1.35it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.97it/s]
+                 all          20          20       0.875           1       0.996       0.821
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    82/119     9.36G   0.01715  0.002119 8.891e-05  0.008839   0.02819         6       672: 100%|██████████| 4/4 [00:05<00:00,  1.39s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.46it/s]
+                 all          20          20       0.876           1       0.996        0.83
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    83/119     9.36G   0.01419  0.001999 8.887e-05  0.006505   0.02279         5       384: 100%|██████████| 4/4 [00:05<00:00,  1.49s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.20it/s]
+                 all          20          20       0.875           1       0.996        0.82
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    84/119     9.36G   0.01697   0.00241 0.0001031   0.01015   0.02964         8       896: 100%|██████████| 4/4 [00:06<00:00,  1.50s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.35it/s]
+                 all          20          20       0.876           1       0.996       0.842
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    85/119     9.36G   0.02014  0.003391  0.000103  0.007857   0.03149         6       576: 100%|██████████| 4/4 [00:01<00:00,  2.29it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.72it/s]
+                 all          20          20       0.812           1       0.996       0.789
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    86/119     9.36G   0.02167  0.003466 0.0001513  0.009251   0.03454         9       352: 100%|██████████| 4/4 [00:04<00:00,  1.03s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.31it/s]
+                 all          20          20       0.876           1       0.996       0.818
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    87/119     9.36G   0.01839   0.00153 0.0003241  0.009039   0.02928         8       672: 100%|██████████| 4/4 [00:06<00:00,  1.74s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.13it/s]
+                 all          20          20       0.877           1       0.996       0.804
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    88/119     9.36G   0.02047  0.001883 0.0001369   0.01038   0.03287        13       864: 100%|██████████| 4/4 [00:03<00:00,  1.23it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.07it/s]
+                 all          20          20       0.877           1       0.996       0.811
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    89/119     9.36G   0.02008  0.004047 9.711e-05   0.01274   0.03696         7       576: 100%|██████████| 4/4 [00:02<00:00,  1.77it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.13it/s]
+                 all          20          20       0.877           1       0.996       0.808
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    90/119     9.36G   0.01977  0.003202 0.0002489  0.009118   0.03234         6       384: 100%|██████████| 4/4 [00:04<00:00,  1.08s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.93it/s]
+                 all          20          20       0.877           1       0.996       0.821
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    91/119     9.36G   0.01973  0.003033 9.478e-05   0.01018   0.03304         5       768: 100%|██████████| 4/4 [00:04<00:00,  1.15s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.27it/s]
+                 all          20          20       0.638           1       0.994       0.782
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    92/119     9.36G   0.02487  0.002361 9.738e-05  0.008987   0.03631         8       704: 100%|██████████| 4/4 [00:02<00:00,  1.40it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.31it/s]
+                 all          20          20       0.877           1       0.996       0.815
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    93/119     9.37G   0.01882  0.002396 9.334e-05  0.009101   0.03041         5       448: 100%|██████████| 4/4 [00:02<00:00,  1.74it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.27it/s]
+                 all          20          20       0.877           1       0.996       0.807
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    94/119     9.37G   0.01719  0.002637 0.0001064   0.00884   0.02877         5       416: 100%|██████████| 4/4 [00:06<00:00,  1.61s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.29it/s]
+                 all          20          20       0.876           1       0.996       0.825
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    95/119     9.37G   0.01522  0.001625 9.426e-05  0.009166   0.02611         6       736: 100%|██████████| 4/4 [00:09<00:00,  2.46s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.46it/s]
+                 all          20          20       0.876           1       0.996       0.824
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    96/119     9.37G   0.01764  0.002827 9.148e-05  0.008902   0.02946         5       544: 100%|██████████| 4/4 [00:01<00:00,  3.98it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.28it/s]
+                 all          20          20       0.876           1       0.996       0.823
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    97/119     9.37G   0.01698  0.002963 0.0001086  0.008038   0.02809         8       512: 100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.04it/s]
+                 all          20          20       0.877           1       0.996       0.804
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    98/119     9.37G   0.01624  0.003765 9.134e-05  0.008259   0.02835        10       320: 100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.49it/s]
+                 all          20          20       0.877           1       0.996       0.821
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+    99/119     9.37G   0.01923  0.003326 0.0001365   0.01066   0.03335         9       544: 100%|██████████| 4/4 [00:08<00:00,  2.02s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.23it/s]
+                 all          20          20       0.877           1       0.996       0.813
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   100/119     9.37G   0.01791   0.00294 8.716e-05  0.007713   0.02865         5       608: 100%|██████████| 4/4 [00:01<00:00,  2.99it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.53it/s]
+                 all          20          20       0.876           1       0.996        0.81
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   101/119     9.37G   0.01931  0.002457 9.195e-05  0.009246   0.03111         5       576: 100%|██████████| 4/4 [00:05<00:00,  1.32s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.30it/s]
+                 all          20          20       0.876           1       0.996       0.801
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   102/119     9.37G   0.01779  0.001633 0.0001152  0.008921   0.02846         3       768: 100%|██████████| 4/4 [00:03<00:00,  1.21it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.01it/s]
+                 all          20          20       0.876           1       0.996       0.802
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   103/119     9.37G   0.01646  0.002159 0.0001069  0.008332   0.02705        11       800: 100%|██████████| 4/4 [00:06<00:00,  1.60s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.08it/s]
+                 all          20          20       0.877           1       0.996       0.817
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   104/119     9.37G   0.01691  0.002845 8.914e-05  0.007896   0.02774         8       896: 100%|██████████| 4/4 [00:01<00:00,  2.26it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.27it/s]
+                 all          20          20       0.877           1       0.996       0.817
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   105/119     9.37G   0.01569  0.003377 0.0001041  0.007158   0.02633        12       416: 100%|██████████| 4/4 [00:01<00:00,  2.00it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.42it/s]
+                 all          20          20       0.877           1       0.996       0.817
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   106/119     9.37G   0.01755  0.004805 9.842e-05  0.007955   0.03041         5       320: 100%|██████████| 4/4 [00:02<00:00,  1.34it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.21it/s]
+                 all          20          20       0.876           1       0.996       0.816
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   107/119     9.37G    0.0159  0.001821 8.196e-05  0.007166   0.02497         5       448: 100%|██████████| 4/4 [00:09<00:00,  2.27s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.58it/s]
+                 all          20          20       0.876           1       0.996       0.816
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   108/119     9.37G      0.02  0.002325 8.741e-05  0.009426   0.03184         8       896: 100%|██████████| 4/4 [00:03<00:00,  1.05it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.02it/s]
+                 all          20          20       0.877           1       0.996       0.817
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   109/119     9.37G     0.019   0.00207 0.0001605   0.00927    0.0305        12       672: 100%|██████████| 4/4 [00:03<00:00,  1.19it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.18it/s]
+                 all          20          20       0.877           1       0.996       0.834
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   110/119     9.37G   0.01705  0.004134  0.000299  0.008105   0.02958         7       416: 100%|██████████| 4/4 [00:02<00:00,  1.61it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.78it/s]
+                 all          20          20       0.876           1       0.996       0.826
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   111/119     9.37G   0.01662  0.001757 8.856e-05  0.008739    0.0272         6       608: 100%|██████████| 4/4 [00:04<00:00,  1.04s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.74it/s]
+                 all          20          20       0.876           1       0.996       0.819
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   112/119     9.37G   0.01557  0.001584 8.651e-05  0.009253    0.0265         5       896: 100%|██████████| 4/4 [00:06<00:00,  1.54s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.28it/s]
+                 all          20          20       0.876           1       0.996       0.825
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   113/119     9.37G    0.0185  0.002625 9.615e-05  0.009957   0.03117        11       704: 100%|██████████| 4/4 [00:06<00:00,  1.53s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.13it/s]
+                 all          20          20       0.876           1       0.996       0.821
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   114/119     9.37G   0.01564  0.003515 0.0001043  0.007642    0.0269         5       320: 100%|██████████| 4/4 [00:06<00:00,  1.51s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.17it/s]
+                 all          20          20       0.876           1       0.996       0.814
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   115/119     9.37G   0.01421  0.001508 7.931e-05  0.007504    0.0233         5       832: 100%|██████████| 4/4 [00:08<00:00,  2.10s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.32it/s]
+                 all          20          20       0.876           1       0.996       0.824
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   116/119     9.37G   0.01533  0.001658 9.699e-05  0.008043   0.02513         7       832: 100%|██████████| 4/4 [00:05<00:00,  1.49s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.52it/s]
+                 all          20          20       0.876           1       0.996       0.811
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   117/119     9.37G   0.01739  0.002098 8.752e-05  0.007423   0.02699         5       768: 100%|██████████| 4/4 [00:02<00:00,  1.84it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  7.30it/s]
+                 all          20          20       0.876           1       0.996       0.804
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   118/119     9.37G   0.01643  0.001955 9.203e-05  0.008625    0.0271         7       672: 100%|██████████| 4/4 [00:06<00:00,  1.62s/it]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  5.30it/s]
+                 all          20          20       0.876           1       0.996       0.816
+
+     Epoch   gpu_mem       box       obj       cls  landmark     total   targets  img_size
+   119/119     9.37G   0.01809  0.003717 8.683e-05  0.009043   0.03093         6       896: 100%|██████████| 4/4 [00:02<00:00,  1.39it/s]
+               Class      Images     Targets           P           R      mAP@.5  mAP@.5:.95: 100%|██████████| 1/1 [00:00<00:00,  6.12it/s]
+                 all          20          20       0.875           1       0.996       0.816
