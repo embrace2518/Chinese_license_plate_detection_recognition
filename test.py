@@ -41,7 +41,7 @@ def test(data,
 
     # Initialize/load model and set device
     training = model is not None
-    if training:  # called by train.py
+    if training:  # called by det_train.py
         device = next(model.parameters()).device  # get model device
 
     else:  # called directly

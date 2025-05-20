@@ -20,7 +20,7 @@ for idx, row in enumerate(sheet.iter_rows(min_row=2, values_only=True)):  # Ìø¹ý
         "shapes": [
             {
                 "label": "single",
-                "points": [[x1, y1], [x2, y2],[x3, y3],[x4, y4]]
+                "points": [[x1, y1], [x2, y2], [x3, y3], [x4, y4]]
             }
         ]
     }

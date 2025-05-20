@@ -23,6 +23,10 @@ from plate_recognition.double_plate_split_merge import get_split_merge
 clors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (0, 255, 255)]
 danger = ['危', '险']
 
+DET_SAVE_ROOT = 'D:/datasets/images/det_result'
+SAVE_ROOT = 'D:/datasets/images/result'
+IMGS_ROOT = 'D:/datasets/images/test'
+
 
 def order_points(pts):  # 四个点按照左上 右上 右下 左下排列
     rect = np.zeros((4, 2), dtype="float32")
@@ -126,7 +130,7 @@ def get_plate_rec_landmark(img, xyxy, conf, landmarks, class_num, device, plate_
         result_dict['color_conf'] = color_conf  # 颜色得分
     result_dict['plate_type'] = class_label  # 单双层 0单层 1双层
 
-    return result_dict
+    return result_dict, roi_img
 
 
 def detect_Recognition_plate(model, orgimg, device, plate_rec_model, img_size, is_color=False):  # 获取车牌信息
@@ -189,10 +193,10 @@ def detect_Recognition_plate(model, orgimg, device, plate_rec_model, img_size, i
                 conf = det[j, 4].cpu().numpy()  # NumPy无法直接处理GPU张量
                 landmarks = det[j, 5:13].view(-1).tolist()
                 class_num = det[j, 13].cpu().numpy()
-                result_dict = get_plate_rec_landmark(orgimg, xyxy, conf, landmarks, class_num, device, plate_rec_model,
+                result_dict, roi_img = get_plate_rec_landmark(orgimg, xyxy, conf, landmarks, class_num, device, plate_rec_model,
                                                      is_color=is_color)
                 dict_list.append(result_dict)
-    return dict_list
+    return dict_list, roi_img
     # cv2.imwrite('result.jpg', orgimg)
 
 
@@ -252,9 +256,10 @@ if __name__ == '__main__':
     parser.add_argument('--rec_model', type=str, default='weights/plate_rec_color.pth',
                         help='model.pt path(s)')  # 车牌识别+颜色识别模型
     parser.add_argument('--is_color', type=bool, default=True, help='plate color')  # 是否识别颜色
-    parser.add_argument('--image_path', type=str, default='imgs', help='source')  # 图片路径
+    parser.add_argument('--image_path', type=str, default=IMGS_ROOT, help='source')  # 图片路径
     parser.add_argument('--img_size', type=int, default=640, help='inference size (pixels)')  # 网络输入图片大小
-    parser.add_argument('--output', type=str, default='result', help='source')  # 图片结果保存的位置
+    parser.add_argument('--output', type=str, default=SAVE_ROOT, help='source')  # 图片结果保存的位置
+    parser.add_argument('--det_output', type=str, default=DET_SAVE_ROOT, help='source')  # 检测结果保存的位置
     parser.add_argument('--video', type=str, default='', help='source')  # 视频的路径
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 使用gpu还是cpu进行识别
     # device =torch.device("cpu")
@@ -290,8 +295,8 @@ if __name__ == '__main__':
                 if img.shape[-1] == 4:  # 图片如果是4个通道的，将其转为3个通道
                     img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)
                 # detect_one(model,img_path,device)
-                dict_list = detect_Recognition_plate(detect_model, img, device, plate_rec_model, opt.img_size,
-                                                     is_color=opt.is_color)  # 检测以及识别车牌
+                dict_list, roi_img = detect_Recognition_plate(detect_model, img, device, plate_rec_model, opt.img_size,
+                                                              is_color=opt.is_color)  # 检测以及识别车牌
                 ori_img = draw_result(img, dict_list)  # 将结果画在图上
                 img_name = os.path.basename(img_path)
                 save_img_path = os.path.join(save_path, img_name)  # 图片保存的路径
@@ -300,6 +305,7 @@ if __name__ == '__main__':
                 if count:
                     time_all += time_gap
                 cv2.imwrite(save_img_path, ori_img)  # opencv将识别的图片保存
+                cv2.imwrite(os.path.join(opt.det_output, img_name), roi_img)
                 count += 1
             print(
                 f"sumTime time is {time.time() - time_begin} s, average pic time is {time_all / (len(file_list) - 1)}")
