@@ -24,9 +24,9 @@ def parse_arg():
     parser.add_argument('--img_w',type=int,default=168,help='width')
     args = parser.parse_args()
    
-    with open(args.cfg, 'r') as f:
-        # config = yaml.load(f, Loader=yaml.FullLoader)
-        config = yaml.load(f)
+    with open(args.cfg, 'r', encoding='utf-8') as f:
+        config = yaml.load(f, Loader=yaml.FullLoader)
+        # config = yaml.load(f)
         config = edict(config)
 
     config.DATASET.ALPHABETS = plateName

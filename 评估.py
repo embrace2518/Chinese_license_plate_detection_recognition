@@ -69,7 +69,7 @@ def plot_training_curves(epochs, metrics):
 
 
 if __name__ == '__main__':
-    log_path = "训练结果1.txt"  # 修正文件名乱码
+    log_path = "det_训练结果1.txt"  # 修正文件名乱码
     epochs, metrics = parse_log(log_path)
     if epochs:
         plot_training_curves(epochs, metrics)
