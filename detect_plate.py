@@ -139,6 +139,7 @@ def detect_Recognition_plate(model, orgimg, device, plate_rec_model, img_size, i
     conf_thres = 0.3  # 得分阈值
     iou_thres = 0.5  # nms的iou值
     dict_list = []
+    roi_img = None  # 添加默认值
     # orgimg = cv2.imread(image_path)  # BGR
     img0 = copy.deepcopy(orgimg)  # 深拷贝
     assert orgimg is not None, 'Image Not Found '
@@ -234,7 +235,7 @@ def draw_result(orgimg, dict_list, is_color=False):  # 车牌结果画出来
 
         if len(result) >= 1:
             orgimg = cv2ImgAddText(orgimg, result_p, rect_area[0], int(rect_area[1] - round(1.6 * labelSize[0][1])),
-                                   (0, 0, 0), 21)
+                                   (0, 0, 0), int(result['roi_height'] * 0.6))
             # orgimg=cv2ImgAddText(orgimg,result_p,rect_area[0]-height_area,rect_area[1]-height_area-10,(0,255,0),height_area)
 
     print(result_str)
@@ -305,7 +306,8 @@ if __name__ == '__main__':
                 if count:
                     time_all += time_gap
                 cv2.imwrite(save_img_path, ori_img)  # opencv将识别的图片保存
-                cv2.imwrite(os.path.join(opt.det_output, img_name), roi_img)
+                if roi_img is not None:
+                    cv2.imwrite(os.path.join(opt.det_output, img_name), roi_img)
                 count += 1
             print(
                 f"sumTime time is {time.time() - time_begin} s, average pic time is {time_all / (len(file_list) - 1)}")
