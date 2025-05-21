@@ -1,11 +1,13 @@
 # -*- coding: UTF-8 -*-
 import argparse
+import sys
 import time
 from pathlib import Path
 import os
 import cv2
 import torch
 import torch.backends.cudnn as cudnn
+from PyQt5.QtWidgets import QApplication
 from numpy import random
 import copy
 import numpy as np
@@ -19,6 +21,7 @@ from utils.cv_puttext import cv2ImgAddText
 from plate_recognition.plate_rec import get_plate_result, allFilePath, init_model, cv_imread
 # from plate_recognition.plate_cls import cv_imread
 from plate_recognition.double_plate_split_merge import get_split_merge
+from zhanshi import run_previous_processes, ImageViewer
 
 clors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (0, 255, 255)]
 danger = ['危', '险']
@@ -378,3 +381,21 @@ if __name__ == '__main__':
         out.release()
         cv2.destroyAllWindows()
         print(f"all frame is {frame_count},average fps is {fps_all / frame_count} fps")
+
+# 请修改为你要展示图片的文件夹路径
+    IMAGE_FOLDER = r"D:\datasets\images\result"
+
+    # 先运行所有前置程序
+    run_previous_processes()
+
+    # 然后启动图片查看器
+    app = QApplication(sys.argv)
+
+    # 检查文件夹是否存在
+    if not os.path.exists(IMAGE_FOLDER):
+        print(f"错误: 指定的文件夹 {IMAGE_FOLDER} 不存在")
+        sys.exit(1)
+
+    viewer = ImageViewer(IMAGE_FOLDER)
+    viewer.show()
+    sys.exit(app.exec_())
