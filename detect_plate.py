@@ -28,7 +28,7 @@ danger = ['危', '险']
 
 DET_SAVE_ROOT = 'D:/datasets/images/det_result'
 SAVE_ROOT = 'D:/datasets/images/result'
-IMGS_ROOT = 'D:/datasets/images/test'
+IMGS_ROOT = 'D:/datasets/images/train'
 
 
 def order_points(pts):  # 四个点按照左上 右上 右下 左下排列
@@ -197,8 +197,9 @@ def detect_Recognition_plate(model, orgimg, device, plate_rec_model, img_size, i
                 conf = det[j, 4].cpu().numpy()  # NumPy无法直接处理GPU张量
                 landmarks = det[j, 5:13].view(-1).tolist()
                 class_num = det[j, 13].cpu().numpy()
-                result_dict, roi_img = get_plate_rec_landmark(orgimg, xyxy, conf, landmarks, class_num, device, plate_rec_model,
-                                                     is_color=is_color)
+                result_dict, roi_img = get_plate_rec_landmark(orgimg, xyxy, conf, landmarks, class_num, device,
+                                                              plate_rec_model,
+                                                              is_color=is_color)
                 dict_list.append(result_dict)
     return dict_list, roi_img
     # cv2.imwrite('result.jpg', orgimg)
@@ -382,20 +383,12 @@ if __name__ == '__main__':
         cv2.destroyAllWindows()
         print(f"all frame is {frame_count},average fps is {fps_all / frame_count} fps")
 
-# 请修改为你要展示图片的文件夹路径
     IMAGE_FOLDER = r"D:\datasets\images\result"
-
-    # 先运行所有前置程序
     run_previous_processes()
-
-    # 然后启动图片查看器
     app = QApplication(sys.argv)
-
-    # 检查文件夹是否存在
     if not os.path.exists(IMAGE_FOLDER):
         print(f"错误: 指定的文件夹 {IMAGE_FOLDER} 不存在")
         sys.exit(1)
-
     viewer = ImageViewer(IMAGE_FOLDER)
     viewer.show()
     sys.exit(app.exec_())

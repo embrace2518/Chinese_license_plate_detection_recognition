@@ -100,7 +100,6 @@ def train(hyp, opt, device, tb_writer=None, wandb=None):
     # ✔ 动态调整优化器参数（包括权重衰减）
     # ✔ 灵活选择优化器（Adam 或 SGD）
     # ✔ 使用学习率调度器（余弦衰减）
-
     # ✔ 控制梯度累积（适配不同批量大小）
     nbs = 64  # nominal batch size
     accumulate = max(round(nbs / total_batch_size), 1)  # accumulate loss before optimizing

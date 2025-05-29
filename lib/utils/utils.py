@@ -4,8 +4,8 @@ from pathlib import Path
 import os
 import torch
 
-def get_optimizer(config, model):
 
+def get_optimizer(config, model):
     optimizer = None
 
     if config.TRAIN.OPTIMIZER == "sgd":
@@ -33,6 +33,7 @@ def get_optimizer(config, model):
 
     return optimizer
 
+
 def create_log_folder(cfg, phase='train'):
     root_output_dir = Path(cfg.OUTPUT_DIR)
     # set up logger
@@ -53,7 +54,6 @@ def create_log_folder(cfg, phase='train'):
     print('=> creating {}'.format(tensorboard_log_dir))
     tensorboard_log_dir.mkdir(parents=True, exist_ok=True)
 
-
     return {'chs_dir': str(checkpoints_output_dir), 'tb_dir': str(tensorboard_log_dir)}
 
 
@@ -62,6 +62,7 @@ def get_batch_label(d, i):
     for idx in i:
         label.append(list(d.labels[idx].values())[0])
     return label
+
 
 class strLabelConverter(object):
     """Convert between str and label.
@@ -98,12 +99,12 @@ class strLabelConverter(object):
 
         length = []
         result = []
-        decode_flag = True if type(text[0])==bytes else False
+        decode_flag = True if type(text[0]) == bytes else False
 
         for item in text:
 
             if decode_flag:
-                item = item.decode('utf-8','strict')
+                item = item.decode('utf-8', 'strict')
             length.append(len(item))
             for char in item:
                 index = self.dict[char]
@@ -126,7 +127,8 @@ class strLabelConverter(object):
         """
         if length.numel() == 1:
             length = length[0]
-            assert t.numel() == length, "text with length: {} does not match declared length: {}".format(t.numel(), length)
+            assert t.numel() == length, "text with length: {} does not match declared length: {}".format(t.numel(),
+                                                                                                         length)
             if raw:
                 return ''.join([self.alphabet[i - 1] for i in t])
             else:
@@ -137,7 +139,8 @@ class strLabelConverter(object):
                 return ''.join(char_list)
         else:
             # batch mode
-            assert t.numel() == length.sum(), "texts with length: {} does not match declared length: {}".format(t.numel(), length.sum())
+            assert t.numel() == length.sum(), "texts with length: {} does not match declared length: {}".format(
+                t.numel(), length.sum())
             texts = []
             index = 0
             for i in range(length.numel()):
@@ -148,9 +151,11 @@ class strLabelConverter(object):
                 index += l
             return texts
 
+
 def get_char_dict(path):
     with open(path, 'rb') as file:
         char_dict = {num: char.strip().decode('gbk', 'ignore') for num, char in enumerate(file.readlines())}
+
 
 def model_info(model):  # Plots a line-by-line description of a PyTorch model
     n_p = sum(x.numel() for x in model.parameters())  # number parameters
