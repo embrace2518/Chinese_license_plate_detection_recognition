@@ -1,6 +1,8 @@
+import self as self
 import torch.nn as nn
 import torch
 import torch.nn.functional as F
+from torch.nn.functional import conv2d
 
 
 class myNet_ocr(nn.Module):
@@ -18,16 +20,35 @@ class myNet_ocr(nn.Module):
         self.newCnn = nn.Conv2d(cfg[-1], num_classes, 1, 1)
         # self.newBn=nn.BatchNorm2d(num_classes)
 
-    def make_layers(self, cfg, batch_norm=False):
+    # 新增SE Block模块
+    class SEBlock(nn.Module):
+        def __init__(self, channel, reduction=16):
+            super(myNet_ocr.SEBlock, self).__init__()
+            self.avg_pool = nn.AdaptiveAvgPool2d(1)
+            self.fc = nn.Sequential(
+                nn.Linear(channel, channel // reduction),
+                nn.ReLU(inplace=True),
+                nn.Linear(channel // reduction, channel),
+                nn.Sigmoid()
+            )
+
+        def forward(self, x):
+            b, c, _, _ = x.size()
+            y = self.avg_pool(x).view(b, c)
+            y = self.fc(y).view(b, c, 1, 1)
+            return x * y
+
+    def make_layers(self, cfg, batch_norm=True):
         layers = []
         in_channels = 3
-        for i in range(len(cfg)):
+        for i, layer_cfg in enumerate(cfg):
             if i == 0:
                 conv2d = nn.Conv2d(in_channels, cfg[i], kernel_size=5, stride=1)
                 if batch_norm:
                     layers += [conv2d, nn.BatchNorm2d(cfg[i]), nn.ReLU(inplace=True)]
                 else:
                     layers += [conv2d, nn.ReLU(inplace=True)]
+                layers.append(self.SEBlock(cfg[i]))  # 添加SE Block
                 in_channels = cfg[i]
             else:
                 if cfg[i] == 'M':
@@ -38,6 +59,7 @@ class myNet_ocr(nn.Module):
                         layers += [conv2d, nn.BatchNorm2d(cfg[i]), nn.ReLU(inplace=True)]
                     else:
                         layers += [conv2d, nn.ReLU(inplace=True)]
+                    layers.append(self.SEBlock(cfg[i]))  # 添加SE Block
                     in_channels = cfg[i]
         return nn.Sequential(*layers)
 
@@ -57,7 +79,6 @@ class myNet_ocr(nn.Module):
             conv = conv.permute(2, 0, 1)  # [w, b, c]
             output = F.log_softmax(conv, dim=2)
             # output = torch.softmax(conv, dim=2)
-
             return output
 
 
