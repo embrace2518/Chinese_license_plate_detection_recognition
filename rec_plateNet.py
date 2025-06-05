@@ -7,7 +7,7 @@ from torch.nn.functional import conv2d
 
 class myNet_ocr(nn.Module):
     def __init__(self, cfg=None, num_classes=78, export=False):
-        super(myNet_ocr, self).__init__()
+        super(myNet_ocr, self).__init__()  # 在PyTorch中，所有自定义神经网络都必须继承nn.Module并在构造函数中调用此父类初始化方法。
         if cfg is None:
             cfg = [32, 32, 64, 64, 'M', 128, 128, 'M', 196, 196, 'M', 256, 256]
             # cfg =[32,32,'M',64,64,'M',128,128,'M',256,256]
@@ -18,7 +18,8 @@ class myNet_ocr(nn.Module):
         # self.loc =  nn.AvgPool2d((2, 2), (5, 2), (0, 1),ceil_mode=False)
         self.loc = nn.MaxPool2d((5, 2), (1, 1), (0, 1), ceil_mode=False)
         self.newCnn = nn.Conv2d(cfg[-1], num_classes, 1, 1)
-        # self.newBn=nn.BatchNorm2d(num_classes)
+        self.newBn=nn.BatchNorm2d(num_classes)
+        self.relu = nn.ReLU(inplace=True)
 
     # 新增SE Block模块
     class SEBlock(nn.Module):
@@ -67,7 +68,7 @@ class myNet_ocr(nn.Module):
         x = self.feature(x)
         x = self.loc(x)
         x = self.newCnn(x)
-        # x=self.newBn(x)
+        x = self.relu(self.newBn(x))  # 增加激活和BN
         if self.export:
             conv = x.squeeze(2)  # b *512 * width
             conv = conv.transpose(2, 1)  # [w, b, c]
@@ -86,6 +87,6 @@ if __name__ == '__main__':
     x = torch.randn(1, 3, 48, 168)
     cfg = [32, 'M', 64, 'M', 128, 'M', 256]
     model = myNet_ocr(num_classes=78, export=True, cfg=cfg)
-    # print(model)
+    print(model)
     out = model(x)
     print(out.shape)

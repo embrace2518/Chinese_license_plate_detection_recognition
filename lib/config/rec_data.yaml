@@ -27,15 +27,15 @@ TRAIN:
   BATCH_SIZE_PER_GPU: 32
   SHUFFLE: True
   BEGIN_EPOCH: 0
-  END_EPOCH: 10
+  END_EPOCH: 100
   RESUME:
     IS_RESUME: False
     FILE: '/mnt/Gpan/Mydata/pytorchPorject/myCrnnPlate/output/360CC/crnn/2022-01-25-22-39/checkpoints/checkpoint_41_acc_0.8977.pth'
   OPTIMIZER: 'adam'
-  LR: 0.0003
+  LR: 0.001
   WD: 0.0
   # LR_STEP: [60, 80]
-  LR_STEP: [20,40,60]
+  LR_STEP: [20,40,60,80]
   LR_FACTOR: 0.1
   MOMENTUM: 0.0
   NESTEROV: False
@@ -47,7 +47,7 @@ TRAIN:
     FREEZE: true
 
 TEST:
-  BATCH_SIZE_PER_GPU: 128
+  BATCH_SIZE_PER_GPU: 32
   SHUFFLE: True  # for random test rather than test on the whole validation set
   NUM_TEST: 1000
   NUM_TEST_DISP: 10
