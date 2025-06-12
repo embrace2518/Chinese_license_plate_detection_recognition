@@ -1,8 +1,6 @@
 from __future__ import absolute_import
 import time
 import torch.nn.functional as F
-import cv2
-from torch._dynamo.polyfills import os
 import lib.utils.utils as utils
 import torch
 
@@ -45,16 +43,14 @@ def train(config, train_loader, dataset, converter, model, criterion, optimizer,
         data_time.update(time.time() - end)
         labels = utils.get_batch_label(dataset, idx)
         inp = inp.to(device)
-        # 修改后：同时接收主输出和汉字分支输出
+        # 同时接收主输出和汉字分支输出
         main_preds, chinese_preds = model(inp)
         preds = main_preds.cpu()
         chinese_preds = chinese_preds.cpu()
         batch_size = inp.size(0)
         text, length = converter.encode(labels)  # length = 一个batch中的总字符长度, text = 一个batch中的字符所对应的下标
         preds_size = torch.IntTensor([preds.size(0)] * batch_size)  # timestep * batchsize
-        # 添加维度验证断言
-        assert preds_size.dim() == 1, f"preds_size应为1维，实际维度{preds_size.dim()}"
-        assert preds_size.size(0) == batch_size, f"preds_size长度{preds_size.size(0)}应与batch_size{batch_size}一致"
+
         # 汉字分支损失
         chinese_texts = [label[0] for label in labels]  # 提取所有样本的汉字标签
         _, chinese_labels = converter.encode(chinese_texts)  # 使用相同的转换器编码

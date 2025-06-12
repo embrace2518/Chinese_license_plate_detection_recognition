@@ -1,7 +1,6 @@
 import torch.optim as optim
 import time
 from pathlib import Path
-import os
 import torch
 
 
@@ -80,7 +79,6 @@ class strLabelConverter(object):
         if self._ignore_case:
             alphabet = alphabet.lower()
         self.alphabet = alphabet + '-'  # for `-1` index
-
         self.dict = {}
         for i, char in enumerate(alphabet):
             # NOTE: 0 is reserved for 'blank' required by wrap_ctc
@@ -110,7 +108,7 @@ class strLabelConverter(object):
                 index = self.dict[char]
                 result.append(index)
         text = result
-        return (torch.IntTensor(text), torch.IntTensor(length))
+        return torch.IntTensor(text), torch.IntTensor(length)
 
     def decode(self, t, length, raw=False):
         """Decode encoded texts back into strs.
@@ -133,9 +131,18 @@ class strLabelConverter(object):
                 return ''.join([self.alphabet[i - 1] for i in t])
             else:
                 char_list = []
+                repeat_count = 0
                 for i in range(length):
-                    if t[i] != 0 and (not (i > 0 and t[i - 1] == t[i])):
-                        char_list.append(self.alphabet[t[i] - 1])
+                    if t[i] != 0:
+                        if t[i] == t[i - 1]:
+                            repeat_count += 1
+                            if repeat_count == 3:
+                                repeat_count = 0
+                                char_list.append(self.alphabet[t[i] - 1])
+                        else:
+                            repeat_count = 0
+                            char_list.append(self.alphabet[t[i] - 1])
+
                 return ''.join(char_list)
         else:
             # batch mode

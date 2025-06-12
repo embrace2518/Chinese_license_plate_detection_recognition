@@ -2,11 +2,10 @@ import self as self
 import torch.nn as nn
 import torch
 import torch.nn.functional as F
-from torch.nn.functional import conv2d
 
 
 class myNet_ocr(nn.Module):
-    def __init__(self, cfg=None, num_classes=78, export=False):
+    def __init__(self, cfg=None, num_classes=78, chinese_classes=43, export=False):
         super(myNet_ocr, self).__init__()  # 在PyTorch中，所有自定义神经网络都必须继承nn.Module并在构造函数中调用此父类初始化方法。
         if cfg is None:
             cfg = [32, 32, 64, 64, 'M', 128, 128, 'M', 196, 196, 'M', 256, 256]
@@ -18,13 +17,7 @@ class myNet_ocr(nn.Module):
         # self.loc =  nn.AvgPool2d((2, 2), (5, 2), (0, 1),ceil_mode=False)
         self.loc = nn.MaxPool2d((5, 2), (1, 1), (0, 1), ceil_mode=False)
         self.fc = nn.Linear(512, num_classes)
-        self.newCnn = nn.Sequential(
-            nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1),  # 输出通道调整为256
-            nn.BatchNorm2d(256),
-            nn.ReLU()
-        )
         self.lstm = nn.LSTM(input_size=256, hidden_size=256, num_layers=2, bidirectional=True)
-        # 添加注意力机制
         self.attention = nn.Sequential(nn.Linear(512, 128), nn.Tanh(), nn.Linear(128, 1))
         # 增加汉字识别专用分支
         self.chinese_head = nn.Sequential(
@@ -33,7 +26,7 @@ class myNet_ocr(nn.Module):
             nn.ReLU(),
             nn.AdaptiveAvgPool2d((1, 1))
         )
-        self.chinese_fc = nn.Linear(128, num_classes)  # 单独汉字分类
+        self.chinese_fc = nn.Linear(128, chinese_classes)  # 单独汉字分类
 
     # 新增SE Block模块
     class SEBlock(nn.Module):
@@ -84,8 +77,8 @@ class myNet_ocr(nn.Module):
         # 汉字专用分支
         chinese_feat = self.chinese_head(x).squeeze()
         chinese_pred = F.log_softmax(self.chinese_fc(chinese_feat), dim=-1)
+
         x = self.loc(x)
-        x = self.newCnn(x)
 
         if self.export:
             conv = x.squeeze(2)  # b *512 * width
@@ -96,13 +89,9 @@ class myNet_ocr(nn.Module):
             assert h == 1, "the height of conv must be 1"
             conv = x.squeeze(2)  # b *512 * width
 
-            # conv = conv.permute(2, 0, 1)  # [w, b, c]
-            # output = F.log_softmax(conv, dim=2)
-            # # output = torch.softmax(conv, dim=2)
-
             # 增强序列处理
-            conv = conv.permute(2, 0, 1)  # [seq_len, batch, channels]
-            self.lstm.flatten_parameters()
+            conv = conv.permute(2, 0, 1)  # [seq_len, batch, channels]是为了适应LSTM的输入格式
+            self.lstm.flatten_parameters()  # 确保参数在内存中是连续的，从而加速计算
             lstm_out, _ = self.lstm(conv)  # [seq_len, batch, hidden_size*2]
 
             # 添加注意力机制
@@ -110,14 +99,10 @@ class myNet_ocr(nn.Module):
             output = lstm_out * attn_weights  # 保持三维结构 [seq_len, batch, features]
             output = output.permute(1, 0, 2)  # 调整为 [batch, seq_len, features]
 
-            # 修改全连接层处理
+            # 全连接层处理
             output = self.fc(output)  # [batch, seq_len, num_classes]
             output = F.log_softmax(output, dim=2)  # 在特征维度做softmax
             output = output.permute(1, 0, 2)  # 恢复为 [seq_len, batch, num_classes]
-
-            # 在主分支输出添加断言
-            assert output.dim() == 3, f"主分支输出维度错误，应为3维，实际{output.dim()}维"
-            print(f"主分支输出形状：[seq_len:{output.size(0)}, batch:{output.size(1)}, classes:{output.size(2)}]")
 
             return output, chinese_pred
 
