@@ -131,18 +131,9 @@ class strLabelConverter(object):
                 return ''.join([self.alphabet[i - 1] for i in t])
             else:
                 char_list = []
-                repeat_count = 0
                 for i in range(length):
-                    if t[i] != 0:
-                        if t[i] == t[i - 1]:
-                            repeat_count += 1
-                            if repeat_count == 3:
-                                repeat_count = 0
-                                char_list.append(self.alphabet[t[i] - 1])
-                        else:
-                            repeat_count = 0
-                            char_list.append(self.alphabet[t[i] - 1])
-
+                    if t[i] != 0 and (not (i > 0 and t[i - 1] == t[i])):
+                        char_list.append(self.alphabet[t[i] - 1])
                 return ''.join(char_list)
         else:
             # batch mode
@@ -170,6 +161,8 @@ def model_info(model):  # Plots a line-by-line description of a PyTorch model
     print('\n%5s %50s %9s %12s %20s %12s %12s' % ('layer', 'name', 'gradient', 'parameters', 'shape', 'mu', 'sigma'))
     for i, (name, p) in enumerate(model.named_parameters()):
         name = name.replace('module_list.', '')
+        # 添加安全计算标准差逻辑
+        param_std = p.std().item() if p.numel() > 1 else float('nan')
         print('%5g %50s %9s %12g %20s %12.3g %12.3g' % (
-            i, name, p.requires_grad, p.numel(), list(p.shape), p.mean(), p.std()))
+            i, name, p.requires_grad, p.numel(), list(p.shape), p.mean().item(), param_std))
     print('Model Summary: %g layers, %g parameters, %g gradients\n' % (i + 1, n_p, n_g))

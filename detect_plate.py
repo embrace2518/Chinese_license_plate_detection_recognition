@@ -328,7 +328,6 @@ if __name__ == '__main__':
             save_img_path = os.path.join(save_path, img_name)
             cv2.imwrite(save_img_path, ori_img)
 
-
     else:  # 处理视频
         video_name = opt.video
         capture = cv2.VideoCapture(video_name)

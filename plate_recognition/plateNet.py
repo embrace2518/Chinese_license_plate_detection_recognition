@@ -1,5 +1,6 @@
 import torch.nn as nn
 import torch
+from click.core import F
 
 
 class myNet_ocr(nn.Module):

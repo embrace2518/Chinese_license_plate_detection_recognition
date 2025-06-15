@@ -30,35 +30,34 @@ class AverageMeter(object):
 
 def train(config, train_loader, dataset, converter, model, criterion, optimizer, device, epoch, writer_dict=None,
           output_dict=None):
-    rec_result_dir = "D:/datasets/images/rec_result"
+    # rec_result_dir = "D:/datasets/images/rec_result"
     batch_time = AverageMeter()  # 记录每批训练耗时
     data_time = AverageMeter()  # 记录数据加载耗时
     losses = AverageMeter()  # 记录损失值变化
-
-    model.train()
-
+    model.train()  # 将模型设置为训练模式
     end = time.time()
+
     for i, (inp, idx) in enumerate(train_loader):
         # measure data time
         data_time.update(time.time() - end)
         labels = utils.get_batch_label(dataset, idx)
         inp = inp.to(device)
-        # 同时接收主输出和汉字分支输出
-        main_preds, chinese_preds = model(inp)
-        preds = main_preds.cpu()
-        chinese_preds = chinese_preds.cpu()
+
+        # # 同时接收主输出和汉字分支输出
+        # main_preds, chinese_preds = model(inp)
+        # preds = main_preds.cpu()
+        # chinese_preds = chinese_preds.cpu()
+        # # 汉字分支损失
+        # chinese_texts = [label[0] for label in labels]  # 提取所有样本的汉字标签
+        # _, chinese_labels = converter.encode(chinese_texts)  # 使用相同的转换器编码
+        # chinese_labels = chinese_labels.cpu().long()  # 添加.long()转换
+        # chinese_loss = F.nll_loss(chinese_preds, chinese_labels)
+
+        preds = model(inp).cpu()
         batch_size = inp.size(0)
         text, length = converter.encode(labels)  # length = 一个batch中的总字符长度, text = 一个batch中的字符所对应的下标
         preds_size = torch.IntTensor([preds.size(0)] * batch_size)  # timestep * batchsize
-
-        # 汉字分支损失
-        chinese_texts = [label[0] for label in labels]  # 提取所有样本的汉字标签
-        _, chinese_labels = converter.encode(chinese_texts)  # 使用相同的转换器编码
-        chinese_labels = chinese_labels.cpu().long()  # 添加.long()转换
-        chinese_loss = F.nll_loss(chinese_preds, chinese_labels)
-
-        main_loss = criterion(preds, text, preds_size, length)
-        loss = main_loss + 0.5 * chinese_loss  # 调整权重系数
+        loss = criterion(preds, text, preds_size, length)  # + 0.5 * chinese_loss  # 调整权重系数
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -113,8 +112,7 @@ def validate(config, val_loader, dataset, converter, model, criterion, device, e
             labels = utils.get_batch_label(dataset, idx)
             inp = inp.to(device)
             # inference
-            main_preds, _ = model(inp)
-            preds = main_preds.cpu()
+            preds = model(inp).cpu()
             batch_size = inp.size(0)
             text, length = converter.encode(labels)
             preds_size = torch.IntTensor([preds.size(0)] * batch_size)
