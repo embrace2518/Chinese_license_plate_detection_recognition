@@ -13,8 +13,6 @@ from lib.dataset._own import _OWN
 from lib.utils.utils import model_info
 from rec_plateNet import myNet_ocr
 from rec_alphabets import plateName, plate_chr
-from rec_LPRNet import build_lprnet
-import lib.models.crnn as crnn
 
 
 # 命令行参数解析器(ArgumentParser)的作用，顾名思义，就是从命令行获取参数。
@@ -51,7 +49,7 @@ def main():
     # load config
     config = parse_arg()
 
-    # create output folder
+    # 检查点及日志
     output_dict = utils.create_log_folder(config, phase='train')
 
     # cudnn
@@ -108,18 +106,7 @@ def main():
         checkpoint = torch.load(model_state_file, map_location='cpu')
         if 'state_dict' in checkpoint.keys():
             checkpoint = checkpoint['state_dict']
-
-        # from collections import OrderedDict
-        # model_dict = OrderedDict()
-        # for k, v in checkpoint.items():
-        #     if 'cnn' in k:
-        #         model_dict[k[4:]] = v
-        # model.cnn.load_state_dict(model_dict)
         model.load_state_dict(checkpoint)
-        # if config.TRAIN.FINETUNE.FREEZE:
-        #     for p in model.cnn.parameters():
-        #         p.requires_grad = False
-
     elif config.TRAIN.RESUME.IS_RESUME:
         model_state_file = config.TRAIN.RESUME.FILE
         if model_state_file == '':
@@ -159,7 +146,6 @@ def main():
         function.train(config, train_loader, train_dataset, converter, model,
                        criterion, optimizer, device, epoch, writer_dict, output_dict)
         lr_scheduler.step()
-
         acc = function.validate(config, val_loader, val_dataset, converter,
                                 model, criterion, device, epoch, writer_dict, output_dict)
 

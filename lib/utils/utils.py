@@ -42,10 +42,9 @@ def create_log_folder(cfg, phase='train'):
 
     dataset = cfg.DATASET.DATASET
     model = cfg.MODEL.NAME
-
     time_str = time.strftime('%Y-%m-%d-%H-%M')
-    checkpoints_output_dir = root_output_dir / dataset / model / time_str / 'checkpoints'
 
+    checkpoints_output_dir = root_output_dir / dataset / model / time_str / 'checkpoints'
     print('=> creating {}'.format(checkpoints_output_dir))
     checkpoints_output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -166,3 +165,12 @@ def model_info(model):  # Plots a line-by-line description of a PyTorch model
         print('%5g %50s %9s %12g %20s %12.3g %12.3g' % (
             i, name, p.requires_grad, p.numel(), list(p.shape), p.mean().item(), param_std))
     print('Model Summary: %g layers, %g parameters, %g gradients\n' % (i + 1, n_p, n_g))
+
+
+def preds_print(preds, preds_size, labels, converter, config):
+    confidence, preds = preds.max(2)
+    preds = preds.transpose(1, 0).contiguous().view(-1)
+    sim_preds = converter.decode(preds.data, preds_size.data, raw=False)
+    raw_preds = converter.decode(preds.data, preds_size.data, raw=True)[:config.PRINT_FREQ]
+    for raw_pred, pred, gt in zip(raw_preds, sim_preds, labels):
+        print('%-20s => %-20s, gt: %-20s' % (raw_pred, pred, gt))

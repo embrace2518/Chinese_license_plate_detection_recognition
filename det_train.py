@@ -150,7 +150,6 @@ def train(hyp, opt, device, tb_writer=None, wandb=None):
     loggers = {'wandb': wandb}
 # ... existing code ...
 
-
     # Resume
     start_epoch, best_fitness = 0, 0.0  # 设定训练起始轮数 记录最佳模型表现（一般用于决定是否保存模型）
     if pretrained:

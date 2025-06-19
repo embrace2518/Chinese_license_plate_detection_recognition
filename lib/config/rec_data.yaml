@@ -13,10 +13,8 @@ CUDNN:
 DATASET:
   DATASET: 360CC
   ROOT: ""
-  # CHAR_FILE: 'lib/dataset/txt/chars_5990.txt'
   CHAR_FILE: 'lib/dataset/txt/plate2.txt'  # 字符集定义文件
   JSON_FILE: {'train': 'datasets/train.txt', 'val': 'datasets/val.txt'}
-#  JSON_FILE: {'train': 'H:/DL-DATASET/360M/train.txt', 'val': 'H:/DL-DATASET/360M/test.txt'}
   SCALE_FACTOR: 0.25  # 图像缩放因子
   ROT_FACTOR: 30  # 数据增强的随机旋转角度范围
   STD: 0.193
@@ -32,10 +30,10 @@ TRAIN:
     IS_RESUME: False
     FILE: '/mnt/Gpan/Mydata/pytorchPorject/myCrnnPlate/output/360CC/crnn/2022-01-25-22-39/checkpoints/checkpoint_41_acc_0.8977.pth'
   OPTIMIZER: 'adam'
-  LR: 0.002
+  LR: 0.01
   WD: 0.0
   LR_STEP: [40,80]
-  LR_FACTOR: 0.5
+  LR_FACTOR: 0.3
   MOMENTUM: 0.0
   NESTEROV: False
   RMSPROP_ALPHA:
@@ -52,7 +50,7 @@ TEST:
   NUM_TEST_DISP: 10
 
 MODEL:
-  NAME: 'crnn'
+  NAME: 'mycnn'
   IMAGE_SIZE:
     OW: 280 # origial width: 280
     H: 32

@@ -5,12 +5,15 @@ import time
 from pathlib import Path
 import os
 import cv2
+import openpyxl
 import torch
 import torch.backends.cudnn as cudnn
 from PyQt5.QtWidgets import QApplication
 from numpy import random
 import copy
 import numpy as np
+
+import data_process
 from models.experimental import attempt_load
 from utils.datasets import letterbox
 from utils.general import check_img_size, non_max_suppression_face, apply_classifier, scale_coords, xyxy2xywh, \
@@ -28,7 +31,7 @@ danger = ['危', '险']
 
 DET_SAVE_ROOT = 'D:/datasets/images/det_result'
 SAVE_ROOT = 'D:/datasets/images/result'
-IMGS_ROOT = 'D:/datasets/images/train'
+IMGS_ROOT = 'D:/datasets/images/test'
 
 
 def order_points(pts):  # 四个点按照左上 右上 右下 左下排列
@@ -142,8 +145,7 @@ def detect_Recognition_plate(model, orgimg, device, plate_rec_model, img_size, i
     conf_thres = 0.3  # 得分阈值
     iou_thres = 0.5  # nms的iou值
     dict_list = []
-    roi_img = None  # 添加默认值
-    # orgimg = cv2.imread(image_path)  # BGR
+    roi_img = None
     img0 = copy.deepcopy(orgimg)  # 深拷贝
     assert orgimg is not None, 'Image Not Found '
     h0, w0 = orgimg.shape[:2]  # orig hw
@@ -168,17 +170,7 @@ def detect_Recognition_plate(model, orgimg, device, plate_rec_model, img_size, i
     if img.ndimension() == 3:
         img = img.unsqueeze(0)
 
-    # Inference
-    # t1 = time_synchronized()/
-    pred = model(img)[0]
-    # t2=time_synchronized()
-    # print(f"infer time is {(t2-t1)*1000} ms")
-
-    # Apply NMS
-    pred = non_max_suppression_face(pred, conf_thres, iou_thres)
-
-    # print('img.shape: ', img.shape)
-    # print('orgimg.shape: ', orgimg.shape)
+    pred = non_max_suppression_face(model(img)[0], conf_thres, iou_thres)
 
     # Process detections
     for i, det in enumerate(pred):  # detections per image
@@ -202,7 +194,6 @@ def detect_Recognition_plate(model, orgimg, device, plate_rec_model, img_size, i
                                                               is_color=is_color)
                 dict_list.append(result_dict)
     return dict_list, roi_img
-    # cv2.imwrite('result.jpg', orgimg)
 
 
 def draw_result(orgimg, dict_list, is_color=False):  # 车牌结果画出来
@@ -246,6 +237,11 @@ def draw_result(orgimg, dict_list, is_color=False):  # 车牌结果画出来
     return orgimg
 
 
+def right_count(img_name, img_label):
+    labels = data_process.get_name_label()
+    return img_label == labels[img_name]
+
+
 def get_second(capture):
     if capture.isOpened():
         rate = capture.get(5)  # 帧速率
@@ -255,6 +251,8 @@ def get_second(capture):
 
 
 if __name__ == '__main__':
+    make_roi_img = input("是否生成小图(生成1/不生成0）")
+    show_img = input("是否展示(展示1/不展示0）")
     parser = argparse.ArgumentParser()  # 创建解析器
     parser.add_argument('--detect_model', nargs='+', type=str, default='weights/plate_detect.pt',
                         help='model.pt path(s)')  # 检测模型
@@ -272,6 +270,7 @@ if __name__ == '__main__':
     print(opt)
     save_path = opt.output
     count = 0
+    count_right = 0
     if not os.path.exists(save_path):
         os.mkdir(save_path)
 
@@ -290,31 +289,43 @@ if __name__ == '__main__':
             file_list = []
             allFilePath(opt.image_path, file_list)  # 将这个目录下的所有图片文件路径读取到file_list里面
             for img_path in file_list:  # 遍历图片文件
-
                 print(count, img_path, end=" ")
                 time_b = time.time()  # 开始时间
                 img = cv_imread(img_path)  # opencv 读取图片
-
+                # 在图片处理前添加检查
                 if img is None:
                     continue
                 if img.shape[-1] == 4:  # 图片如果是4个通道的，将其转为3个通道
                     img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)
+                elif len(img.shape) == 2:  # 如果是灰度图
+                    img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)  # 转换为BGR
+                elif img.shape[2] == 4:  # 如果是RGBA图
+                    img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)  # 转换为BGR
                 # detect_one(model,img_path,device)
                 dict_list, roi_img = detect_Recognition_plate(detect_model, img, device, plate_rec_model, opt.img_size,
                                                               is_color=opt.is_color)  # 检测以及识别车牌
+                #  生成小图
+                if make_roi_img == '1' and roi_img is not None:
+                    roi_img = cv2.resize(roi_img, (168, 48), interpolation=cv2.INTER_LINEAR)
+                    cv2.imwrite(os.path.join(opt.det_output, img_name), roi_img)
                 ori_img = draw_result(img, dict_list)  # 将结果画在图上
                 img_name = os.path.basename(img_path)
                 save_img_path = os.path.join(save_path, img_name)  # 图片保存的路径
-                time_e = time.time()
-                time_gap = time_e - time_b  # 计算单个图片识别耗时
+                cv2.imwrite(save_img_path, ori_img)  # opencv将识别的图片保存
+                time_gap = time.time() - time_b  # 计算单个图片识别耗时
                 if count:
                     time_all += time_gap
-                cv2.imwrite(save_img_path, ori_img)  # opencv将识别的图片保存
-                if roi_img is not None:
-                    cv2.imwrite(os.path.join(opt.det_output, img_name), roi_img)
                 count += 1
+                for result in dict_list:
+                    img_label = result['plate_no']
+                    if right_count(img_name, img_label):
+                        count_right += 1
+                    else:
+                        print('识别错误图片：', img_name)
+            print('正确率为', count_right / count)
             print(
                 f"sumTime time is {time.time() - time_begin} s, average pic time is {time_all / (len(file_list) - 1)}")
+
         else:  # 单个图片
             print(count, opt.image_path, end=" ")
             img = cv_imread(opt.image_path)
@@ -374,7 +385,6 @@ if __name__ == '__main__':
                 #     writer.writerow({"车牌":plate_no,"时间":time_str})
                 # out.write(ori_img)
 
-
         else:
             print("失败")
         capture.release()
@@ -382,12 +392,13 @@ if __name__ == '__main__':
         cv2.destroyAllWindows()
         print(f"all frame is {frame_count},average fps is {fps_all / frame_count} fps")
 
-    IMAGE_FOLDER = r"D:\datasets\images\result"
-    run_previous_processes()
-    app = QApplication(sys.argv)
-    if not os.path.exists(IMAGE_FOLDER):
-        print(f"错误: 指定的文件夹 {IMAGE_FOLDER} 不存在")
-        sys.exit(1)
-    viewer = ImageViewer(IMAGE_FOLDER)
-    viewer.show()
-    sys.exit(app.exec_())
+    if show_img == '1':
+        IMAGE_FOLDER = r"D:\datasets\images\result"
+        run_previous_processes()
+        app = QApplication(sys.argv)
+        if not os.path.exists(IMAGE_FOLDER):
+            print(f"错误: 指定的文件夹 {IMAGE_FOLDER} 不存在")
+            sys.exit(1)
+        viewer = ImageViewer(IMAGE_FOLDER)
+        viewer.show()
+        sys.exit(app.exec_())

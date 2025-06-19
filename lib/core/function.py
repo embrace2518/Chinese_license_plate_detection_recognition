@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 import time
-import torch.nn.functional as F
 import lib.utils.utils as utils
 import torch
 
@@ -36,35 +35,23 @@ def train(config, train_loader, dataset, converter, model, criterion, optimizer,
     losses = AverageMeter()  # 记录损失值变化
     model.train()  # 将模型设置为训练模式
     end = time.time()
-
     for i, (inp, idx) in enumerate(train_loader):
         # measure data time
         data_time.update(time.time() - end)
         labels = utils.get_batch_label(dataset, idx)
         inp = inp.to(device)
-
-        # # 同时接收主输出和汉字分支输出
-        # main_preds, chinese_preds = model(inp)
-        # preds = main_preds.cpu()
-        # chinese_preds = chinese_preds.cpu()
-        # # 汉字分支损失
-        # chinese_texts = [label[0] for label in labels]  # 提取所有样本的汉字标签
-        # _, chinese_labels = converter.encode(chinese_texts)  # 使用相同的转换器编码
-        # chinese_labels = chinese_labels.cpu().long()  # 添加.long()转换
-        # chinese_loss = F.nll_loss(chinese_preds, chinese_labels)
-
-        preds = model(inp).cpu()
         batch_size = inp.size(0)
+        preds = model(inp).cpu()
         text, length = converter.encode(labels)  # length = 一个batch中的总字符长度, text = 一个batch中的字符所对应的下标
         preds_size = torch.IntTensor([preds.size(0)] * batch_size)  # timestep * batchsize
-        loss = criterion(preds, text, preds_size, length)  # + 0.5 * chinese_loss  # 调整权重系数
+        loss = criterion(preds, text, preds_size, length)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
         losses.update(loss.item(), inp.size(0))
         batch_time.update(time.time() - end)
-
         if i % config.PRINT_FREQ == 0:
+            # utils.preds_print(preds, preds_size, labels, converter, config)
             msg = 'Epoch: [{0}][{1}/{2}]\t' \
                   'Time {batch_time.val:.3f}s ({batch_time.avg:.3f}s)\t' \
                   'Speed {speed:.1f} samples/s\t' \
@@ -74,26 +61,6 @@ def train(config, train_loader, dataset, converter, model, criterion, optimizer,
                 speed=inp.size(0) / batch_time.val,
                 data_time=data_time, loss=losses)
             print(msg)
-
-            # with torch.no_grad():
-            #     # 确保维度正确 (seq_len, batch_size, num_classes)
-            #     preds_perm = preds.permute(1, 0, 2) if preds.dim() == 3 else preds.unsqueeze(0)
-            #     _, preds_idx = preds_perm.max(2)
-            #     # 计算实际序列长度
-            #     actual_seq_len = preds_perm.size(0)
-            #     preds_size = torch.IntTensor([actual_seq_len] * batch_size)
-            #     preds_str = converter.decode(preds_idx.data, preds_size, raw=False)
-            #
-            # # 保存前4张图像
-            # for j in range(min(4, inp.size(0))):
-            #     img = inp[j].cpu().numpy()
-            #     img = img * config.DATASET.STD + config.DATASET.MEAN  # 反归一化
-            #     img = (img * 255).transpose(1, 2, 0).astype('uint8')
-            #     label = labels[j]
-            #     pred = preds_str[j]
-            #     cv2.putText(img, f'GT:{label}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-            #     cv2.putText(img, f'Pred:{pred}', (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
-            #     cv2.imwrite(os.path.join(rec_result_dir, f'epoch{epoch}_batch{i}_sample{j}.jpg'), img)
 
             if writer_dict:
                 writer = writer_dict['writer']
@@ -138,7 +105,6 @@ def validate(config, val_loader, dataset, converter, model, criterion, device, e
 
     print(n_correct)
     print(config.TEST.NUM_TEST * config.TEST.BATCH_SIZE_PER_GPU)
-    # accuracy = n_correct / float(config.TEST.NUM_TEST * config.TEST.BATCH_SIZE_PER_GPU)
     accuracy = n_correct / sum
     print('Test loss: {:.4f}, accuray: {:.4f}'.format(losses.avg, accuracy))
 

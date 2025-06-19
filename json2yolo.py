@@ -102,7 +102,6 @@ if __name__ == "__main__":
             continue
         with open(json_file_, 'r', encoding='utf-8') as a:
             data_dict = json.load(a)
-            # print(data_dict['shapes'])
             with open(txt_path, "w") as f:
                 for data_message in data_dict['shapes']:
                     index += 1

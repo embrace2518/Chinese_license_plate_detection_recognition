@@ -10,9 +10,10 @@
 python detect_plate.py --detect_model weights/plate_detect.pt  --rec_model weights/plate_rec_color.pth --image_path imgs --output result
 ```
 
-## 数据集存放位置
+## 数据集准备
 D:/datasets/images用于存放图片，/train存放训练图片，/val存放验证图片，/test存放测试图片。
 D:/datasets/labels用于存放标签，格式同上。
+通过data_process.py导入图片，mode2导入标签（.json），通过json2yolo.py转换成所需格式（.txt）
 
 视频功能暂未实现：
 ```
@@ -28,10 +29,9 @@ python train.py
    ![Image text](rec_images/tmp2E.png)
 
    图片命名如上图：**车牌号_序号.jpg**
-
    如何得到小图？
-   运行detect_plate.py，会在datasets/det_results生成小图，然后分别将小图放入datasets/rec_train 和 datasets/rec_val，
-   
+   运行detect_plate.py，会在datasets/det_results生成小图，运行data_process.py进行重命名，
+   然后放入datasets/rec_train和datasets/rec_val，
    执行如下命令，给数据集打上标签,生成train.txt和val.txt
 
    ```

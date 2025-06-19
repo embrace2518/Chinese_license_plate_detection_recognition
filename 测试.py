@@ -1,11 +1,10 @@
 import torch
 from torch import nn
+import lib.utils.utils as utils
+from rec_alphabets import plate_chr
+from rec_plateNet import myNet_ocr
 
-rnn = nn.LSTM(10, 20, 2)
-input = torch.randn(5, 3, 10)
-h0 = torch.randn(2, 3, 20)
-c0 = torch.randn(2, 3, 20)
-output, (hn, cn) = rnn(input, (h0, c0))
-print(output.shape)
-print(hn.shape)
-print(cn.shape)
+model = myNet_ocr(num_classes=len(plate_chr), cfg=cfg)
+converter = utils.strLabelConverter(config.DATASET.ALPHABETS)
+criterion = torch.nn.CTCLoss()
+text, length = converter.encode(labels)
