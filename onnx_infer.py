@@ -6,6 +6,9 @@ import os
 import argparse
 from PIL import Image, ImageDraw, ImageFont
 import time
+
+from lib.utils.img_process import order_points
+
 plate_color_list=['黑色','蓝色','绿色','白色','黄色']
 plateName=r"#京沪津渝冀晋蒙辽吉黑苏浙皖闽赣鲁豫鄂湘粤桂琼川贵云藏陕甘青宁新学警港澳挂使领民航危0123456789ABCDEFGHJKLMNPQRSTUVWXYZ险品"
 mean_value,std_value=((0.588,0.193))#识别模型均值标准差
@@ -57,17 +60,6 @@ def get_split_merge(img):  #双层车牌进行分割后识别
     img_upper = cv2.resize(img_upper,(img_lower.shape[1],img_lower.shape[0]))
     new_img = np.hstack((img_upper,img_lower))
     return new_img
-
-
-def order_points(pts):     # 关键点排列 按照（左上，右上，右下，左下）的顺序排列
-    rect = np.zeros((4, 2), dtype = "float32")
-    s = pts.sum(axis = 1)
-    rect[0] = pts[np.argmin(s)]
-    rect[2] = pts[np.argmax(s)]
-    diff = np.diff(pts, axis = 1)
-    rect[1] = pts[np.argmin(diff)]
-    rect[3] = pts[np.argmax(diff)]
-    return rect
 
 
 def four_point_transform(image, pts):  #透视变换得到矫正后的图像，方便识别
