@@ -1,37 +1,27 @@
 # -*- coding: UTF-8 -*-
 import argparse
-import sys
 import time
-from pathlib import Path
 import os
 import cv2
-import openpyxl
 import torch
-import torch.backends.cudnn as cudnn
-from PyQt5.QtWidgets import QApplication
-from numpy import random
 import copy
 import numpy as np
-
 import data_process
+import myshow
 from models.experimental import attempt_load
 from utils.datasets import letterbox
 from utils.general import check_img_size, non_max_suppression_face, apply_classifier, scale_coords, xyxy2xywh, \
     strip_optimizer, set_logging, increment_path
-from utils.plots import plot_one_box
-from utils.torch_utils import select_device, load_classifier, time_synchronized
 from utils.cv_puttext import cv2ImgAddText
 from plate_recognition.plate_rec import get_plate_result, allFilePath, init_model, cv_imread
-# from plate_recognition.plate_cls import cv_imread
 from plate_recognition.double_plate_split_merge import get_split_merge
-from zhanshi import run_previous_processes, ImageViewer
 
 clors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (0, 255, 255)]
 danger = ['危', '险']
 
-DET_SAVE_ROOT = 'D:/datasets/images/det_result'
-SAVE_ROOT = 'D:/datasets/images/result'
-IMGS_ROOT = 'D:/datasets/images/test'
+DET_SAVE_FOLDER = 'D:/datasets/images/det_result'
+SAVE_FOLDER = 'D:/datasets/images/result'
+IMGS_FOLDER = 'D:/datasets/images/test'
 
 
 def order_points(pts):  # 四个点按照左上 右上 右下 左下排列
@@ -259,10 +249,10 @@ if __name__ == '__main__':
     parser.add_argument('--rec_model', type=str, default='weights/plate_rec_color.pth',
                         help='model.pt path(s)')  # 车牌识别+颜色识别模型
     parser.add_argument('--is_color', type=bool, default=True, help='plate color')  # 是否识别颜色
-    parser.add_argument('--image_path', type=str, default=IMGS_ROOT, help='source')  # 图片路径
+    parser.add_argument('--image_path', type=str, default=IMGS_FOLDER, help='source')  # 图片路径
     parser.add_argument('--img_size', type=int, default=640, help='inference size (pixels)')  # 网络输入图片大小
-    parser.add_argument('--output', type=str, default=SAVE_ROOT, help='source')  # 图片结果保存的位置
-    parser.add_argument('--det_output', type=str, default=DET_SAVE_ROOT, help='source')  # 检测结果保存的位置
+    parser.add_argument('--output', type=str, default=SAVE_FOLDER, help='source')  # 图片结果保存的位置
+    parser.add_argument('--det_output', type=str, default=DET_SAVE_FOLDER, help='source')  # 检测结果保存的位置
     parser.add_argument('--video', type=str, default='', help='source')  # 视频的路径
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 使用gpu还是cpu进行识别
     # device =torch.device("cpu")
@@ -357,7 +347,6 @@ if __name__ == '__main__':
                 ret, img = capture.read()
                 if not ret:
                     break
-                # if frame_count%rate==0:
                 img0 = copy.deepcopy(img)
                 dict_list = detect_Recognition_plate(detect_model, img, device, plate_rec_model, opt.img_size,
                                                      is_color=opt.is_color)
@@ -367,24 +356,8 @@ if __name__ == '__main__':
                 fps = 1.0 / infer_time
                 fps_all += fps
                 str_fps = f'fps:{fps:.4f}'
-
                 cv2.putText(ori_img, str_fps, (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-                # cv2.imshow("haha",ori_img)
-                # cv2.waitKey(1)
                 out.write(ori_img)
-
-                # current_time = int(frame_count/FrameNumber*duration)
-                # sec = current_time%60
-                # minute = current_time//60
-                # for result_ in result_list:
-                #     plate_no = result_['plate_no']
-                #     if not is_car_number(pattern_str,plate_no):
-                #         continue
-                #     print(f'车牌号:{plate_no},时间:{minute}分{sec}秒')
-                #     time_str =f'{minute}分{sec}秒'
-                #     writer.writerow({"车牌":plate_no,"时间":time_str})
-                # out.write(ori_img)
-
         else:
             print("失败")
         capture.release()
@@ -393,12 +366,4 @@ if __name__ == '__main__':
         print(f"all frame is {frame_count},average fps is {fps_all / frame_count} fps")
 
     if show_img == '1':
-        IMAGE_FOLDER = r"D:\datasets\images\result"
-        run_previous_processes()
-        app = QApplication(sys.argv)
-        if not os.path.exists(IMAGE_FOLDER):
-            print(f"错误: 指定的文件夹 {IMAGE_FOLDER} 不存在")
-            sys.exit(1)
-        viewer = ImageViewer(IMAGE_FOLDER)
-        viewer.show()
-        sys.exit(app.exec_())
+        myshow.show_result(SAVE_FOLDER)

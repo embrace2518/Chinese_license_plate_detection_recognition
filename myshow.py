@@ -120,32 +120,16 @@ class ImageViewer(QMainWindow):
             self.status_label.setText(f"图片 {self.current_index + 1}/{len(self.image_files)}")
 
 
-def run_previous_processes():
-    """模拟前面需要运行的所有程序"""
-    print("开始运行前置处理程序...")
-    # 这里应该是所有需要先运行的代码
-    # 为了演示，我们只打印一些信息并等待一段时间
-    for i in range(5):
-        print(f"处理步骤 {i + 1}/5...")
-        time.sleep(1)  # 模拟每个步骤需要1秒
-    print("前置处理程序全部完成！")
-
-
-if __name__ == '__main__':
-    # 请修改为你要展示图片的文件夹路径
-    IMAGE_FOLDER = r"D:\datasets\images\result"
-
-    # 先运行所有前置程序
-    run_previous_processes()
-
-    # 然后启动图片查看器
+def show_result(img_folder):
     app = QApplication(sys.argv)
-
     # 检查文件夹是否存在
-    if not os.path.exists(IMAGE_FOLDER):
-        print(f"错误: 指定的文件夹 {IMAGE_FOLDER} 不存在")
+    if not os.path.exists(img_folder):
+        print(f"错误: 指定的文件夹 {img_folder} 不存在")
         sys.exit(1)
-
-    viewer = ImageViewer(IMAGE_FOLDER)
+    viewer = ImageViewer(img_folder)
     viewer.show()
     sys.exit(app.exec_())
+
+    img_folder = r"D:\datasets\images\result"
+
+
