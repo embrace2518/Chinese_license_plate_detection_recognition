@@ -11,16 +11,15 @@ from lib.core import function
 from lib.dataset._360cc import _360CC
 from lib.dataset._own import _OWN
 from lib.utils.utils import model_info
-from plate_recognition import rec_cnn, rec_crnn, rec_LPRNet
-from rec_myNet import myNet
-from rec_alphabets import plateName, plate_chr
+from plate_recognition import rec_cnn, rec_crnn, rec_LPRNet, rec_myNet
+from plate_recognition.rec_alphabets import plate_chr, plateName
 
 
 # 命令行参数解析器(ArgumentParser)的作用，顾名思义，就是从命令行获取参数。
 def parse_arg():
     parser = argparse.ArgumentParser(description="train plate_recognition model")
     parser.add_argument('--model', type=str, default='rec_myNet', help='model')
-    parser.add_argument('--cfg', type=str, default='lib/config/rec_data.yaml' ,help='experiment configuration filename')
+    parser.add_argument('--cfg', type=str, default='lib/config/rec_data.yaml', help='experiment configuration filename')
     parser.add_argument('--img_h', type=int, default=48, help='height')
     parser.add_argument('--img_w', type=int, default=168, help='width')
     args = parser.parse_args()
@@ -72,11 +71,11 @@ def main():
     cfg = [16, 16, 32, 32, 'M', 64, 64, 'M', 96, 96, 'M', 128, 128]  # medium model
     # cfg = [32, 32, 64, 64, 'M', 128, 128, 'M', 196, 196, 'M', 256, 256]  # big model
     if config.MODEL.NAME == 'rec_myNet':
-        model = myNet(num_classes=len(plate_chr), cfg=cfg)
+        model = rec_myNet.myNet(num_classes=len(plate_chr), cfg=cfg)
     elif config.MODEL.NAME == 'rec_cnn':
         model = rec_cnn.CNNNet(num_classes=len(plate_chr), cfg=cfg)
     elif config.MODEL.NAME == 'rec_crnn':
-        model = rec_crnn.get_crnn(config,cfg=cfg)
+        model = rec_crnn.get_crnn(config, cfg=cfg)
     elif config.MODEL.NAME == 'rec_LPRNet':
         model = rec_LPRNet.build_lprnet(num_classes=len(plate_chr))
 
