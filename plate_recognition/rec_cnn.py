@@ -3,9 +3,9 @@ import torch
 from click.core import F
 
 
-class myNet_ocr(nn.Module):
+class CNNNet(nn.Module):
     def __init__(self,cfg=None,num_classes=78,export=False):
-        super(myNet_ocr, self).__init__()
+        super(CNNNet, self).__init__()
         if cfg is None:
             cfg =[32,32,64,64,'M',128,128,'M',196,196,'M',256,256]
             # cfg =[32,32,'M',64,64,'M',128,128,'M',256,256]
@@ -199,6 +199,6 @@ class myNet_ocr_color(nn.Module):
 
 if __name__ == '__main__':
     x = torch.randn(1,3,48,216)
-    model = myNet_ocr(num_classes=78,export=True)
+    model = CNNNet(num_classes=78, export=True)
     out = model(x)
     print(out.shape)

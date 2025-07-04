@@ -54,3 +54,17 @@ def scale_coords_landmarks(img1_shape, coords, img0_shape, ratio_pad=None):
     coords[:, 6].clamp_(0, img0_shape[1])  # x4
     coords[:, 7].clamp_(0, img0_shape[0])  # y4
     return coords
+
+# 双层车牌分割
+def get_split_merge(img):
+    h,w,c = img.shape
+    img_upper = img[0:int(5/12*h),:]
+    img_lower = img[int(1/3*h):,:]
+    img_upper = cv2.resize(img_upper,(img_lower.shape[1],img_lower.shape[0]))
+    new_img = np.hstack((img_upper,img_lower))
+    return new_img
+
+if __name__=="__main__":
+    img = cv2.imread("double_plate/tmp8078.png")
+    new_img =get_split_merge(img)
+    cv2.imwrite("double_plate/new.jpg",new_img)

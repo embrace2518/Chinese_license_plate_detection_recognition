@@ -28,7 +28,7 @@ TRAIN:
   END_EPOCH: 100
   RESUME:
     IS_RESUME: False
-    FILE: '/mnt/Gpan/Mydata/pytorchPorject/myCrnnPlate/output/360CC/crnn/2022-01-25-22-39/checkpoints/checkpoint_41_acc_0.8977.pth'
+    FILE: 'output/360CC/mynet/2022-01-25-22-39/checkpoints/checkpoint_41_acc_0.8977.pth'
   OPTIMIZER: 'adam'
   LR: 0.01
   WD: 0.0
@@ -40,7 +40,7 @@ TRAIN:
   RMSPROP_CENTERED:
   FINETUNE:
     IS_FINETUNE: False
-    FINETUNE_CHECKPOINIT: '/mnt/Gpan/Mydata/pytorchPorject/myCrnnPlate/output/360CC/crnn/2022-01-25-23-21/checkpoints/checkpoint_93_acc_0.9422.pth'
+    FINETUNE_CHECKPOINIT: 'output/360CC/mynet/2022-01-25-23-21/checkpoints/checkpoint_93_acc_0.9422.pth'
     FREEZE: true
 
 TEST:
@@ -50,11 +50,11 @@ TEST:
   NUM_TEST_DISP: 10
 
 MODEL:
-  NAME: 'mycnn'
+  NAME: 'myNet'
   IMAGE_SIZE:
     OW: 280 # origial width: 280
-    H: 32
-    W: 100   # resized width: 160
+    H: 48
+    W: 168   # resized width: 160
   NUM_CLASSES: 0
   NUM_HIDDEN: 256
 

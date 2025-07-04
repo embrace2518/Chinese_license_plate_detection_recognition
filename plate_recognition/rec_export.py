@@ -1,5 +1,5 @@
 import argparse
-from rec_plateNet import myNet_ocr
+from rec_myNet import myNet
 from rec_alphabets import plate_chr
 import torch
 import onnx
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     print(opt)
     checkpoint = torch.load(opt.weights)
     cfg = checkpoint['cfg']
-    model = myNet_ocr(num_classes=len(plate_chr), cfg=cfg, export=True)
+    model = myNet(num_classes=len(plate_chr), cfg=cfg, export=True)
     model.load_state_dict(checkpoint['state_dict'])
     model.eval()
 

@@ -4,9 +4,9 @@ import torch
 import torch.nn.functional as F
 
 
-class myNet_ocr(nn.Module):
+class myNet(nn.Module):
     def __init__(self, cfg=None, num_classes=78, export=False, se_scale_factor=0.8):
-        super(myNet_ocr, self).__init__()  # 在PyTorch中，所有自定义神经网络都必须继承nn.Module并在构造函数中调用此父类初始化方法。
+        super(myNet, self).__init__()  # 在PyTorch中，所有自定义神经网络都必须继承nn.Module并在构造函数中调用此父类初始化方法。
         if cfg is None:
             cfg = [16, 16, 32, 32, 'M', 64, 64, 'M', 96, 96, 'M', 128, 128]  # medium model
         self.export = export
@@ -82,7 +82,7 @@ class myNet_ocr(nn.Module):
 if __name__ == '__main__':
     x = torch.randn(1, 3, 48, 168)
     cfg = [32, 'M', 64, 'M', 128, 'M', 256]
-    model = myNet_ocr(num_classes=78, export=True, cfg=cfg)
+    model = myNet(num_classes=78, export=True, cfg=cfg)
     print(model)
     out = model(x)
     print(out.shape)

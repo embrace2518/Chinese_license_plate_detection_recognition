@@ -1,23 +1,27 @@
-# coding=gbk
 import openpyxl
 import json
 import os
+from json2yolo import json2yolo
 
-base_dir = "D:/datasets/labels"
-dirs = ['train', 'val', 'test']
-[os.makedirs(os.path.join(base_dir, d), exist_ok=True) for d in dirs]
-src_dir = "D:/datasets/images/det_result"
+excel_dir =  r"D:/datasets/CLPD.xlsx"
+img_dir = r"/datasets/images"
+label_dir = r"D:/datasets/labels"
+det_dir = r"D:/datasets/images/det_result"
+
+_dir = ['train', 'val']
+_dirs = ['train', 'val', 'test']
+[os.makedirs(os.path.join(label_dir, d), exist_ok=True) for d in _dirs]
+
 
 
 def get_json():
-    wb = openpyxl.load_workbook("D:/datasets/CLPD.xlsx")
+    wb = openpyxl.load_workbook(excel_dir)
     sheet = wb.active
-    # 获取用户输入
-    train_rows = int(input("请输入训练集行数："))
-    val_rows = int(input("请输入验证集行数："))
-    test_rows = int(input("请输入测试集行数："))
+    train_rows = int(input("请输入训练集图片数量："))
+    val_rows = int(input("请输入验证集图片数量："))
+    test_rows = int(input("请输入测试集图片数量："))
     current_row = 2  # 从第二行开始
-    for dir_name, max_rows in zip(dirs, [train_rows, val_rows, test_rows]):
+    for dir_name, max_rows in zip(_dirs, [train_rows, val_rows, test_rows]):
         end_row = current_row + max_rows
         for idx, row in enumerate(sheet.iter_rows(min_row=current_row, max_row=end_row - 1, values_only=True)):
             path, x1, y1, x2, y2, x3, y3, x4, y4, label = row
@@ -29,7 +33,7 @@ def get_json():
                     }
                 ]
             }
-            save_path = os.path.join(base_dir, dir_name)
+            save_path = os.path.join(label_dir, dir_name)
             filename = os.path.join(save_path, f"{current_row - 2}.json")
             with open(filename, "w", encoding="utf-8") as f:
                 json.dump(json_data, f)
@@ -37,7 +41,7 @@ def get_json():
 
 
 def get_name_label():
-    wb = openpyxl.load_workbook("D:/datasets/CLPD.xlsx")
+    wb = openpyxl.load_workbook(excel_dir)
     sheet = wb.active
     labels = {}
     for row in sheet.iter_rows(min_row=2, values_only=True):
@@ -47,20 +51,20 @@ def get_name_label():
     return labels
 
 
-if __name__ == '__main__':
-    choice = input("请选择模式 (1-分数据集生成JSON / 2-重命名图片): ")
-    if choice == '1':
-        get_json()
-    elif choice == '2':
-        labels = get_name_label()
-        for _, filename in enumerate(os.listdir(src_dir)):
-            if labels[filename]:
-                src = os.path.join(src_dir, filename)
-                new_name = f"{labels[filename]}_{filename}"
-                dst = os.path.join(src_dir, new_name)
-                os.rename(src, dst)
-                print(f"重命名: {filename} -> {new_name}")
+def img_rename(det_dir):
+    labels = get_name_label()
+    for _, filename in enumerate(os.listdir(det_dir)):
+        if labels[filename]:
+            src = os.path.join(det_dir, filename)
+            new_name = f"{labels[filename]}_{filename}"
+            dst = os.path.join(det_dir, new_name)
+            os.rename(src, dst)
+            print(f"重命名: {filename} -> {new_name}")
 
-    else:
-        print("无效的选项")
-    print("操作完成！")
+
+
+if __name__ == '__main__':
+    print('正在生成JSON文件并转换成Yolo格式')
+    get_json()
+    [json2yolo(os.path.join(img_dir, d), os.path.join(label_dir, d)) for d in _dir]
+    print('操作完成')

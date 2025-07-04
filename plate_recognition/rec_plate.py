@@ -1,11 +1,8 @@
-from plate_recognition.plateNet import myNet_ocr, myNet_ocr_color
+from plate_recognition.rec_plateNet import CNNNet, myNet_ocr_color
 import torch
-import torch.nn as nn
 import cv2
 import numpy as np
 import os
-import time
-import sys
 
 
 def cv_imread(path):  # 可以读取中文路径的图片

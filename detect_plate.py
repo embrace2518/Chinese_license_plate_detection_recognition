@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 import argparse
 import time
 import os
@@ -6,15 +5,15 @@ import cv2
 import torch
 import copy
 import numpy as np
-import data_process
-import myshow
-from lib.utils import img_process
+from lib.utils.img_process import get_split_merge, four_point_transform, scale_coords_landmarks
 from models.experimental import attempt_load
 from utils.datasets import letterbox
 from utils.general import check_img_size, non_max_suppression_face, scale_coords
 from utils.cv_puttext import cv2ImgAddText
-from plate_recognition.plate_rec import get_plate_result, allFilePath, init_model, cv_imread
-from plate_recognition.double_plate_split_merge import get_split_merge
+from plate_recognition.rec_plate import get_plate_result, allFilePath, init_model, cv_imread
+from data_process import get_name_label,img_rename
+from myshow import show_result
+
 
 clors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (0, 255, 255)]
 danger = ['危', '险']
@@ -41,7 +40,7 @@ def get_plate_rec_landmark(img, xyxy, conf, landmarks, class_num, device, plate_
         point_y = int(landmarks[2 * i + 1])
         landmarks_np[i] = np.array([point_x, point_y])
     class_label = int(class_num)  # 车牌的的类型0代表单牌，1代表双层车牌
-    roi_img = img_process.four_point_transform(img, landmarks_np)  # 透视变换得到车牌小图
+    roi_img = four_point_transform(img, landmarks_np)  # 透视变换得到车牌小图
     if class_label:
         roi_img = get_split_merge(roi_img)
     if not is_color:
@@ -99,7 +98,7 @@ def detect_Recognition_plate(model, orgimg, device, plate_rec_model, img_size, i
             for c in det[:, -1].unique():
                 n = (det[:, -1] == c).sum()  # detections per class
 
-            det[:, 5:13] = img_process.scale_coords_landmarks(img.shape[2:], det[:, 5:13], orgimg.shape).round()
+            det[:, 5:13] = scale_coords_landmarks(img.shape[2:], det[:, 5:13], orgimg.shape).round()
 
             for j in range(det.size()[0]):
                 xyxy = det[j, :4].view(-1).tolist()
@@ -186,7 +185,7 @@ def process_single_image(img_path):
             print('识别错误的图片：', img_name)
 
 def right_img(img_name, img_label):
-    labels = data_process.get_name_label()
+    labels = get_name_label()
     return img_label == labels[img_name]
 
 
@@ -278,5 +277,8 @@ if __name__ == '__main__':
         cv2.destroyAllWindows()
         print(f"all frame is {frame_count},average fps is {fps_all / frame_count} fps")
 
+    if make_roi_img == '1':
+        img_rename(opt.det_output)
+
     if show_img == '1':
-        myshow.show_result(SAVE_PATH)
+        show_result(SAVE_PATH)

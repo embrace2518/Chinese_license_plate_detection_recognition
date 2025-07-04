@@ -11,26 +11,27 @@ from lib.core import function
 from lib.dataset._360cc import _360CC
 from lib.dataset._own import _OWN
 from lib.utils.utils import model_info
-from rec_plateNet import myNet_ocr
+from plate_recognition import rec_cnn, rec_crnn, rec_LPRNet
+from rec_myNet import myNet
 from rec_alphabets import plateName, plate_chr
 
 
 # 命令行参数解析器(ArgumentParser)的作用，顾名思义，就是从命令行获取参数。
 def parse_arg():
-    parser = argparse.ArgumentParser(description="train crnn")
-
-    parser.add_argument('--cfg', help='experiment configuration filename', required=True, type=str)
+    parser = argparse.ArgumentParser(description="train plate_recognition model")
+    parser.add_argument('--model', type=str, default='rec_myNet', help='model')
+    parser.add_argument('--cfg', type=str, default='lib/config/rec_data.yaml' ,help='experiment configuration filename')
     parser.add_argument('--img_h', type=int, default=48, help='height')
     parser.add_argument('--img_w', type=int, default=168, help='width')
     args = parser.parse_args()
 
     with open(args.cfg, 'r', encoding='utf-8') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
-        # config = yaml.load(f)
         config = edict(config)  # 将普通的字典对象转换为支持属性访问的特殊字典
 
     config.DATASET.ALPHABETS = plateName
     config.MODEL.NUM_CLASSES = len(config.DATASET.ALPHABETS)
+    config.MODEL.NAME = args.model
     config.HEIGHT = args.img_h
     config.WIDTH = args.img_w
     return config
@@ -67,20 +68,23 @@ def main():
         'valid_global_steps': 0,
     }
 
-    # construct face related neural networks
     # cfg =[8,8,16,16,'M',32,32,'M',48,48,'M',64,128] #small model
     cfg = [16, 16, 32, 32, 'M', 64, 64, 'M', 96, 96, 'M', 128, 128]  # medium model
     # cfg = [32, 32, 64, 64, 'M', 128, 128, 'M', 196, 196, 'M', 256, 256]  # big model
-    # model = crnn.get_crnn(config,cfg=cfg)
-    model = myNet_ocr(num_classes=len(plate_chr), cfg=cfg)
-    # model = build_lprnet(num_classes=len(plate_chr))
+    if config.MODEL.NAME == 'rec_myNet':
+        model = myNet(num_classes=len(plate_chr), cfg=cfg)
+    elif config.MODEL.NAME == 'rec_cnn':
+        model = rec_cnn.CNNNet(num_classes=len(plate_chr), cfg=cfg)
+    elif config.MODEL.NAME == 'rec_crnn':
+        model = rec_crnn.get_crnn(config,cfg=cfg)
+    elif config.MODEL.NAME == 'rec_LPRNet':
+        model = rec_LPRNet.build_lprnet(num_classes=len(plate_chr))
 
     # get device
     if torch.cuda.is_available():
         device = torch.device("cuda:{}".format(config.GPUID))
     else:
         device = torch.device("cpu:0")
-    # 将模型转移到目标设备
     model = model.to(device)
 
     # define loss function
@@ -99,6 +103,7 @@ def main():
             config.TRAIN.LR_FACTOR, last_epoch - 1
         )
 
+    # 是否微调
     if config.TRAIN.FINETUNE.IS_FINETUNE:
         model_state_file = config.TRAIN.FINETUNE.FINETUNE_CHECKPOINIT
         if model_state_file == '':
@@ -107,6 +112,7 @@ def main():
         if 'state_dict' in checkpoint.keys():
             checkpoint = checkpoint['state_dict']
         model.load_state_dict(checkpoint)
+    # 是否中断后继续
     elif config.TRAIN.RESUME.IS_RESUME:
         model_state_file = config.TRAIN.RESUME.FILE
         if model_state_file == '':
@@ -115,8 +121,6 @@ def main():
         if 'state_dict' in checkpoint.keys():
             model.load_state_dict(checkpoint['state_dict'])
             last_epoch = checkpoint['epoch']
-            # optimizer.load_state_dict(checkpoint['optimizer'])
-            # lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
         else:
             model.load_state_dict(checkpoint)
 
@@ -160,8 +164,6 @@ def main():
                 "cfg": cfg,
                 "state_dict": model.state_dict(),
                 "epoch": epoch + 1,
-                # "optimizer": optimizer.state_dict(),
-                # "lr_scheduler": lr_scheduler.state_dict(),
                 "best_acc": best_acc,
             }, os.path.join(output_dict['chs_dir'], "checkpoint_{}_acc_{:.4f}.pth".format(epoch, acc))
         )

@@ -3,8 +3,7 @@ import torch.utils.data as data
 import os
 import numpy as np
 import cv2
-import platform
-from rec_alphabets import plate_chr
+from plate_recognition.rec_alphabets import plate_chr
 
 
 def cv_imread(path):  # 读取中文路径的图片

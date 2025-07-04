@@ -52,7 +52,7 @@ TEST:
   NUM_TEST_DISP: 10
 
 MODEL:
-  NAME: 'crnn'
+  NAME: 'myNet'
   IMAGE_SIZE:
     OW: 280 # origial width: 280
     H: 32

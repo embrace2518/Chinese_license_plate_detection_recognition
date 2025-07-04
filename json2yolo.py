@@ -40,16 +40,9 @@ def xywh2yolo(rect, landmarks_sort, img):
     # annotation[0, 13] = (landmarks_sort[0][1]+landmarks_sort[1][1])/2 / h  # l4_y
     return annotation
 
-# 遍历指定数据集文件夹中的图片 (pic_file_list)
-# 读取对应的 JSON 文件，提取标注信息
-# 计算目标的边界框 (rect) 和 关键点 (points)
-# 转换为 YOLO 格式的数据
-# 将转换后的标注信息保存到 .txt 文件
-if __name__ == "__main__":
+
+def json2yolo(pic_file, lab_file):
     pic_file_list = []
-    pic_file = r"/datasets/images/train"
-    lab_file = r"/datasets/labels/train"
-    save_small_path = "small"
     label_file = ['single', 'double']
     allFilePath(pic_file, pic_file_list)
     count = 0
@@ -73,11 +66,7 @@ if __name__ == "__main__":
                     label = data_message['label']
                     points = data_message['points']
                     pts = np.array(points)
-                    # pts=order_points(pts)
-                    # new_img = four_point_transform(img,pts)
                     roi_img_name = label + "_" + str(index) + ".jpg"
-                    save_path = os.path.join(save_small_path, roi_img_name)
-                    # cv2.imwrite(save_path,new_img)
                     x_max, y_max = np.max(pts, axis=0)
                     x_min, y_min = np.min(pts, axis=0)
                     rect = [x_min, y_min, x_max, y_max]
@@ -86,7 +75,6 @@ if __name__ == "__main__":
                     print(data_message)
                     label = data_message['label']
                     str_label = label_file.index(label)
-                    # str_label = "0 "
                     str_label = str(str_label) + " "
                     for i in range(len(annotation[0])):
                         str_label = str_label + " " + str(annotation[0][i])
