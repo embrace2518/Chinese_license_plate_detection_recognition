@@ -20,6 +20,7 @@ danger = ['危', '险']
 
 DET_PATH = 'D:/datasets/images/det_result'
 SAVE_PATH = 'D:/datasets/images/result'
+WRONG_PATH = 'D:/datasets/images/wrong_result'
 IMGS_PATH = 'D:/datasets/images/test'
 
 
@@ -172,15 +173,15 @@ def process_single_image(img_path):
         det_img = cv2.resize(det_img, (168, 48), interpolation=cv2.INTER_LINEAR)
         cv2.imwrite(os.path.join(opt.det_output, img_name), det_img)
     ori_img = draw_result(img, dict_list)
-    save_img_path = os.path.join(save_path, img_name)
-    cv2.imwrite(save_img_path, ori_img)
     time_all += time.time() - time_b
     count += 1
     for result in dict_list:
         img_label = result['plate_no']
         if right_img(img_name, img_label):
             count_right += 1
+            cv2.imwrite(os.path.join(save_path, img_name), ori_img)
         else:
+            cv2.imwrite(os.path.join(wro_path, img_name), ori_img)
             print('识别错误的图片：', img_name)
 
 def right_img(img_name, img_label):
@@ -209,12 +210,14 @@ if __name__ == '__main__':
     parser.add_argument('--img_path', type=str, default=IMGS_PATH, help='source')  # 图片路径
     parser.add_argument('--img_size', type=int, default=640, help='inference size (pixels)')  # 网络输入图片大小
     parser.add_argument('--output', type=str, default=SAVE_PATH, help='source')  # 图片结果保存的位置
+    parser.add_argument('--wro_output', type=str, default=WRONG_PATH, help='source')  # 错误结果保存的位置
     parser.add_argument('--det_output', type=str, default=DET_PATH, help='source')  # 检测结果保存的位置
     parser.add_argument('--video', type=str, default='', help='source')  # 视频的路径
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 使用gpu还是cpu进行识别
     opt = parser.parse_args()  # 解析命令行参数
     print(opt)
     save_path = opt.output
+    wro_path = opt.wro_output
     if not os.path.exists(save_path):
         os.mkdir(save_path)
 
