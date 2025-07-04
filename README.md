@@ -1,10 +1,10 @@
-## **最全车牌识别算法，支持12种中文车牌类型**
+## **车牌识别算法**
 
 **环境要求: python >=3.6  pytorch >=1.7**
 
-如何运行？
+## 如何运行？
 
-直接运行detect_plate.py 或者运行如下命令行：
+运行detect_plate.py 或者运行如下命令行：
 
 ```
 python detect_plate.py --detect_model weights/plate_detect.pt  --rec_model weights/plate_rec_color.pth --image_path imgs --output result
@@ -15,20 +15,14 @@ D:/datasets/images用于存放图片，/train存放训练图片，/val存放验�
 D:/datasets/labels用于存放标签，格式同上。
 通过data_process.py导入图片，mode2导入标签（.json），通过json2yolo.py转换成所需格式（.txt）
 
-视频功能暂未实现：
-```
-python detect_plate.py --detect_model weights/plate_detect.pt  --rec_model weights/plate_rec_color.pth --video 2.mp4
-```
 
-## 车牌检测模型训练
+## 车牌检测定位模型训练
 ```
 python train.py
 ```
 
 ## 车牌识别数据集准备
-   ![Image text](rec_images/tmp2E.png)
-
-   图片命名如上图：**车牌号_序号.jpg**
+   图片命名为：**车牌号_序号.jpg**
    如何得到小图？
    运行detect_plate.py，会在datasets/det_results生成小图，运行data_process.py进行重命名，
    然后放入datasets/rec_train和datasets/rec_val，
@@ -42,17 +36,10 @@ python train.py
    数据格式如下：
    train.txt
    ```
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_ALL/冀BAJ731_3.jpg 5 53 52 60 49 45 43 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_ALL/冀BD387U_2454.jpg 5 53 55 45 50 49 70 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_ALL/冀BG150C_3.jpg 5 53 58 43 47 42 54 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖A656V3_8090.jpg 13 52 48 47 48 71 45 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖C91546_7979.jpg 13 54 51 43 47 46 48 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖G88950_1540.jpg 13 58 50 50 51 47 42 
-   /mnt/Gu/trainData/plate/new_git_train/CCPD_CRPD_OTHER_ALL/皖GX9Y56_2113.jpg 13 58 73 51 74 47 48 
+   D:/datasets/images/rec_val/冀BAJ731_3.jpg 5 53 52 60 49 45 43 
    ```
 
    将train.txt  val.txt路径写入lib/config/rec_data.yaml 中
-
    ```
    DATASET:
      DATASET: 360CC
@@ -61,7 +48,7 @@ python train.py
      JSON_FILE: {'train': 'datasets/train.txt', 'val': 'datasets/val.txt'}
    ```
 
-## 车牌识别模型Train
+## 车牌识别模型训练
 
 ```
 python rec_train.py --cfg lib/config/rec_data.yaml
@@ -79,7 +66,7 @@ python export.py --weights saved_model/best.pth --save_path saved_model/best.onn
 ```
 
 
-#### onnx 推理
+## onnx 推理
 
 ```
 python onnx_infer.py --onnx_file saved_model/best.onnx  --image_path images/test.jpg

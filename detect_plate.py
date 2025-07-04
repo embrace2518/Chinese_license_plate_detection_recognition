@@ -11,8 +11,7 @@ import myshow
 from lib.utils import img_process
 from models.experimental import attempt_load
 from utils.datasets import letterbox
-from utils.general import check_img_size, non_max_suppression_face, apply_classifier, scale_coords, xyxy2xywh, \
-    strip_optimizer, set_logging, increment_path
+from utils.general import check_img_size, non_max_suppression_face, scale_coords
 from utils.cv_puttext import cv2ImgAddText
 from plate_recognition.plate_rec import get_plate_result, allFilePath, init_model, cv_imread
 from plate_recognition.double_plate_split_merge import get_split_merge
@@ -67,8 +66,6 @@ def get_plate_rec_landmark(img, xyxy, conf, landmarks, class_num, device, plate_
 
 # 获取车牌信息
 def detect_Recognition_plate(model, orgimg, device, plate_rec_model, img_size, is_color=False):
-    # Load model
-    # img_size = opt_img_size
     conf_thres = 0.3  # 得分阈值
     iou_thres = 0.5  # nms的iou值
     dict_list = []
@@ -129,7 +126,6 @@ def draw_result(orgimg, dict_list, is_color=False):
         rect_area[2] = min(orgimg.shape[1], int(rect_area[2] + padding_w))
         rect_area[3] = min(orgimg.shape[0], int(rect_area[3] + padding_h))
 
-        height_area = result['roi_height']
         landmarks = result['landmarks']
         result_p = result['plate_no']
         if result['plate_type'] == 0:  # 单层
@@ -151,7 +147,6 @@ def draw_result(orgimg, dict_list, is_color=False):
         if len(result) >= 1:
             orgimg = cv2ImgAddText(orgimg, result_p, rect_area[0], int(rect_area[1] - round(1.6 * labelSize[0][1])),
                                    (0, 0, 0), int(result['roi_height'] * 0.6))
-            # orgimg=cv2ImgAddText(orgimg,result_p,rect_area[0]-height_area,rect_area[1]-height_area-10,(0,255,0),height_area)
 
     print(result_str)
     return orgimg

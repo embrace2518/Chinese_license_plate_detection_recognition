@@ -69,57 +69,24 @@ def get_plate_result(img, device, model, is_color=False):
     prob, index = preds.max(dim=-1)
     index = index.view(-1).detach().cpu().numpy()
     prob = prob.view(-1).detach().cpu().numpy()
-
-    # preds=preds.view(-1).detach().cpu().numpy()
     newPreds, new_index = decodePlate(index)
     prob = prob[new_index]
     plate = ""
     for i in newPreds:
         plate += plateName[i]
-    # if not (plate[0] in plateName[1:44] ):
-    #     return ""
     if is_color:
         return plate, prob, color[color_index], color_conf  # 返回车牌号以及每个字符的概率,以及颜色，和颜色的概率
     else:
         return plate, prob
 
 
-def init_model(device, model_path, is_color=False):
-    # print( print(sys.path))
-    # model_path ="plate_recognition/model/checkpoint_61_acc_0.9715.pth"
+def init_model(device, model_path, is_color):
     check_point = torch.load(model_path, map_location=device, weights_only=False)
     model_state = check_point['state_dict']
     cfg = check_point['cfg']
-    color_classes = 0
-    if is_color:
-        color_classes = 5  # 颜色类别数
+    color_classes = 5 if is_color else 0
     model = myNet_ocr_color(num_classes=len(plateName), export=True, cfg=cfg, color_num=color_classes)
-
     model.load_state_dict(model_state, strict=False)
-    model.to(device)
-    model.eval()
+    model.to(device).eval()
     return model
 
-
-# model = init_model(device)
-if __name__ == '__main__':
-    model_path = r"weights/plate_rec_color.pth"
-    image_path = "images/tmp2424.png"
-    testPath = r"/mnt/Gpan/Mydata/pytorchPorject/CRNN/crnn_plate_recognition/images"
-    fileList = []
-    allFilePath(testPath, fileList)
-    #    result = get_plate_result(image_path,device)
-    #    print(result)
-    is_color = False
-    model = init_model(device, model_path, is_color=is_color)
-    right = 0
-    begin = time.time()
-
-    for imge_path in fileList:
-        img = cv2.imread(imge_path)
-        if is_color:
-            plate, _, plate_color, _ = get_plate_result(img, device, model, is_color=is_color)
-            print(plate)
-        else:
-            plate, _ = get_plate_result(img, device, model, is_color=is_color)
-            print(plate, imge_path)

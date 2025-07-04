@@ -130,6 +130,5 @@ def show_result(img_folder):
     viewer.show()
     sys.exit(app.exec_())
 
-    img_folder = r"D:\datasets\images\result"
 
 
