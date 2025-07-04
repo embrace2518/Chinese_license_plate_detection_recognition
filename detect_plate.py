@@ -11,7 +11,7 @@ from utils.datasets import letterbox
 from utils.general import check_img_size, non_max_suppression_face, scale_coords
 from utils.cv_puttext import cv2ImgAddText
 from plate_recognition.rec_plate import get_plate_result, allFilePath, init_model, cv_imread
-from data_process import get_name_label,img_rename
+from lib.utils.data_process import get_name_label, img_rename
 from myshow import show_result
 
 
@@ -160,9 +160,8 @@ def process_single_image(img_path):
     # 在图片处理前添加检查
     if img is None:
         return
-    if (img.shape[-1] == 4  # 如果是4通道
-            or img.shape[2] == 4  # 灰度图
-            or len(img.shape) == 2):  # RGBA图
+    # 判断通道数前先判断 shape 长度
+    if (len(img.shape) == 3 and img.shape[2] == 4) or len(img.shape) == 2:
         img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)  # 转换为BGR
 
     dict_list, det_img = detect_Recognition_plate(detect_model, img, device, plate_rec_model, opt.img_size,

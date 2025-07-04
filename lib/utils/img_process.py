@@ -63,8 +63,3 @@ def get_split_merge(img):
     img_upper = cv2.resize(img_upper,(img_lower.shape[1],img_lower.shape[0]))
     new_img = np.hstack((img_upper,img_lower))
     return new_img
-
-if __name__=="__main__":
-    img = cv2.imread("double_plate/tmp8078.png")
-    new_img =get_split_merge(img)
-    cv2.imwrite("double_plate/new.jpg",new_img)

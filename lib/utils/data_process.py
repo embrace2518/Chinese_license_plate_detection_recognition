@@ -17,10 +17,10 @@ _dirs = ['train', 'val', 'test']
 def get_json():
     wb = openpyxl.load_workbook(excel_dir)
     sheet = wb.active
-    train_rows = int(input("ÇëÊäÈëÑµÁ·¼¯Í¼Æ¬ÊıÁ¿£º"))
-    val_rows = int(input("ÇëÊäÈëÑéÖ¤¼¯Í¼Æ¬ÊıÁ¿£º"))
-    test_rows = int(input("ÇëÊäÈë²âÊÔ¼¯Í¼Æ¬ÊıÁ¿£º"))
-    current_row = 2  # ´ÓµÚ¶şĞĞ¿ªÊ¼
+    train_rows = int(input("è¯·è¾“å…¥è®­ç»ƒé›†å›¾ç‰‡æ•°é‡ï¼š"))
+    val_rows = int(input("è¯·è¾“å…¥éªŒè¯é›†å›¾ç‰‡æ•°é‡ï¼š"))
+    test_rows = int(input("è¯·è¾“å…¥æµ‹è¯•é›†å›¾ç‰‡æ•°é‡ï¼š"))
+    current_row = 2  # ä»ç¬¬äºŒè¡Œå¼€å§‹
     for dir_name, max_rows in zip(_dirs, [train_rows, val_rows, test_rows]):
         end_row = current_row + max_rows
         for idx, row in enumerate(sheet.iter_rows(min_row=current_row, max_row=end_row - 1, values_only=True)):
@@ -50,8 +50,7 @@ def get_name_label():
             labels[filename] = row[9]
     return labels
 
-
-def img_rename(det_dir):
+def img_rename():
     labels = get_name_label()
     for _, filename in enumerate(os.listdir(det_dir)):
         if labels[filename]:
@@ -59,12 +58,12 @@ def img_rename(det_dir):
             new_name = f"{labels[filename]}_{filename}"
             dst = os.path.join(det_dir, new_name)
             os.rename(src, dst)
-            print(f"ÖØÃüÃû: {filename} -> {new_name}")
+            print(f"é‡å‘½å: {filename} -> {new_name}")
 
 
 
 if __name__ == '__main__':
-    print('ÕıÔÚÉú³ÉJSONÎÄ¼ş²¢×ª»»³ÉYolo¸ñÊ½')
+    print('æ­£åœ¨ç”ŸæˆJSONæ–‡ä»¶å¹¶è½¬æ¢æˆYoloæ ¼å¼')
     get_json()
     [json2yolo(os.path.join(img_dir, d), os.path.join(label_dir, d)) for d in _dir]
-    print('²Ù×÷Íê³É')
+    print('æ“ä½œå®Œæˆ')
